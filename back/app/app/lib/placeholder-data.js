@@ -1,5 +1,13 @@
-// This file contains placeholder data that you'll be replacing with real data in the Data Fetching chapter:
-const users = [{
+const users = [
+  {
+    id: '410544b2-4001-4271-9855-fec4b6a6442a',
+    name: 'User',
+    email: 'user@nextmail.com',
+    password: '123456',
+  },
+];
+
+const vinyls = [{
   id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
   name: "Darlene McKinlay",
   phone: "+7 362 681 2103",
@@ -63,4 +71,5 @@ const users = [{
 
 module.exports = {
   users,
+  vinyls
 };
