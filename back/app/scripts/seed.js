@@ -54,7 +54,8 @@ async function seedVinyls (client) {
         name VARCHAR(255) NOT NULL,
         phone TEXT NOT NULL UNIQUE,
         title TEXT NOT NULL,
-        picture VARCHAR(255) NOT NULL
+        picture VARCHAR(255) NOT NULL,
+        user_id VARCHAR(255) NOT NULL
       );
     `;
 
@@ -64,8 +65,8 @@ async function seedVinyls (client) {
     const insertedVinyls = await Promise.all(
       vinyls.map(async (vinyl) => {
         return client.sql`
-        INSERT INTO vinyls (id, name, phone, title, picture)
-        VALUES (${vinyl.id}, ${vinyl.name}, ${vinyl.phone}, ${vinyl.title}, ${vinyl.picture})
+        INSERT INTO vinyls (id, name, phone, title, picture, user_id)
+        VALUES (${vinyl.id}, ${vinyl.name}, ${vinyl.phone}, ${vinyl.title}, ${vinyl.picture}, ${vinyl.user_id})
         ON CONFLICT (id) DO NOTHING;
       `;
       }),
