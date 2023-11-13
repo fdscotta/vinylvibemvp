@@ -1,37 +1,38 @@
 import { sql } from '@vercel/postgres';
 import {
-  InvoiceForm,
-  InvoicesTable,
-  LatestInvoiceRaw,
+  VinylsForm,
+  VinylsTable,
   User,
 } from './definitions';
-import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
+import { vinyls } from './placeholder-data';
 
 
-export async function fetchLatestInvoices() {
+export async function fetchLatestVinyls(userID : string) {
   noStore();
   try {
-    const data = await sql<LatestInvoiceRaw>`
-      SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
-      FROM invoices
-      JOIN customers ON invoices.customer_id = customers.id
-      ORDER BY invoices.date DESC
+    const data = await sql<VinylsTable>`
+      SELECT
+        id,
+        name,
+        phone,
+        title,
+        picture,
+        user_id
+      FROM vinyls
+      WHERE user_id = ${userID}
       LIMIT 5`;
 
-    const latestInvoices = data.rows.map((invoice) => ({
-      ...invoice,
-      amount: formatCurrency(invoice.amount),
-    }));
-    return latestInvoices;
+    const latestVinyls = data.rows;
+    return latestVinyls;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch the latest invoices.');
+    throw new Error('Failed to fetch the latest vinyls.');
   }
 }
 
 const ITEMS_PER_PAGE = 6;
-export async function fetchFilteredInvoices(
+export async function fetchFilteredVinyls(
   query: string,
   currentPage: number,
 ) {
@@ -39,79 +40,68 @@ export async function fetchFilteredInvoices(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const invoices = await sql<InvoicesTable>`
+    const vinyls = await sql<VinylsTable>`
       SELECT
-        invoices.id,
-        invoices.amount,
-        invoices.date,
-        invoices.status,
-        customers.name,
-        customers.email,
-        customers.image_url
-      FROM invoices
-      JOIN customers ON invoices.customer_id = customers.id
+        id,
+        name,
+        phone,
+        title,
+        picture,
+        user_id
+      FROM vinyls
       WHERE
-        customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`} OR
-        invoices.amount::text ILIKE ${`%${query}%`} OR
-        invoices.date::text ILIKE ${`%${query}%`} OR
-        invoices.status ILIKE ${`%${query}%`}
-      ORDER BY invoices.date DESC
+        title::text ILIKE ${`%${query}%`} OR
+/*         date::text ILIKE ${`%${query}%`}
+      ORDER BY vinyls.date DESC */
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
-    return invoices.rows;
+    return vinyls.rows;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoices.');
+    throw new Error('Failed to fetch vinyls.');
   }
 }
 
-export async function fetchInvoicesPages(query: string) {
+export async function fetchVinylsPages(query: string) {
   noStore();
   try {
     const count = await sql`SELECT COUNT(*)
-    FROM invoices
-    JOIN customers ON invoices.customer_id = customers.id
+    FROM vinyls
     WHERE
-      customers.name ILIKE ${`%${query}%`} OR
-      customers.email ILIKE ${`%${query}%`} OR
-      invoices.amount::text ILIKE ${`%${query}%`} OR
-      invoices.date::text ILIKE ${`%${query}%`} OR
-      invoices.status ILIKE ${`%${query}%`}
+        title::text ILIKE ${`%${query}%`} OR
+        /* date::text ILIKE ${`%${query}%`} */
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of invoices.');
+    throw new Error('Failed to fetch total number of vinyls.');
   }
 }
 
-export async function fetchInvoiceById(id: string) {
+export async function fetchVinylById(id: string) {
   noStore();
   try {
-    const data = await sql<InvoiceForm>`
+    const data = await sql<VinylsForm>`
       SELECT
-        invoices.id,
-        invoices.customer_id,
-        invoices.amount,
-        invoices.status
-      FROM invoices
-      WHERE invoices.id = ${id};
+        id,
+        name,
+        phone,
+        title,
+        picture,
+        user_id
+      FROM vinyls
+      WHERE id = ${id};
     `;
 
-    const invoice = data.rows.map((invoice) => ({
-      ...invoice,
-      // Convert amount from cents to dollars
-      amount: invoice.amount / 100,
-    }));
+    const vinyl = data.rows;
 
-    return invoice[0];
+    return vinyl[0];
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch invoice.');
+    throw new Error('Failed to fetch vinyl.');
   }
 }
 
