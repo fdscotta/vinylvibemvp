@@ -38,7 +38,6 @@ export async function fetchFilteredVinyls(
 ) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-
   try {
     const vinyls = await sql<VinylsTable>`
       SELECT
@@ -50,9 +49,7 @@ export async function fetchFilteredVinyls(
         user_id
       FROM vinyls
       WHERE
-        title::text ILIKE ${`%${query}%`} OR
-/*         date::text ILIKE ${`%${query}%`}
-      ORDER BY vinyls.date DESC */
+        title::text ILIKE ${`%${query}%`}
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
@@ -67,11 +64,7 @@ export async function fetchVinylsPages(query: string) {
   noStore();
   try {
     const count = await sql`SELECT COUNT(*)
-    FROM vinyls
-    WHERE
-        title::text ILIKE ${`%${query}%`} OR
-        /* date::text ILIKE ${`%${query}%`} */
-  `;
+    FROM vinyls`;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;

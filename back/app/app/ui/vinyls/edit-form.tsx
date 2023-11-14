@@ -1,20 +1,26 @@
 'use client';
 
-import { CustomerField } from '@/app/lib/definitions';
-import Link from 'next/link';
+import { CustomerField, VinylForm } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { createInvoice } from '@/app/lib/actions';
+import { updateVinyl } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 
-export default function Form({ customers }: { customers: CustomerField[] }) {
+export default function EditVinylForm({
+  vinyl,
+}: {
+  vinyl: VinylForm;
+  customers: CustomerField[];
+}) {
   const initialState = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(createInvoice, initialState);
+  const updateVinylWithId = updateVinyl.bind(null, vinyl.id);
+  const [state, dispatch] = useFormState(updateVinylWithId, initialState);
 
   return (
     <form action={dispatch}>
@@ -29,7 +35,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               id="customer"
               name="customerId"
               className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue=""
+              defaultValue={vinyl.customer_id}
               aria-describedby="customer-error"
             >
               <option value="" disabled>
@@ -57,7 +63,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           ) : null}
         </div>
 
-        {/* Invoice Amount */}
+        {/* Vinyl Amount */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
             Choose an amount
@@ -68,7 +74,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                 id="amount"
                 name="amount"
                 type="number"
-                step="0.01"
+                defaultValue={vinyl.amount}
                 placeholder="Enter USD amount"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="amount-error"
@@ -90,10 +96,10 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           ) : null}
         </div>
 
-        {/* Invoice Status */}
+        {/* Vinyl Status */}
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">
-            Set the invoice status
+            Set the vinyl status
           </legend>
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
             <div className="flex gap-4">
@@ -103,6 +109,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                   name="status"
                   type="radio"
                   value="pending"
+                  defaultChecked={vinyl.status === 'pending'}
                   className="h-4 w-4 border-gray-300 bg-gray-100 text-gray-600 focus:ring-2 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-gray-600"
                 />
                 <label
@@ -118,6 +125,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                   name="status"
                   type="radio"
                   value="paid"
+                  defaultChecked={vinyl.status === 'paid'}
                   className="h-4 w-4 border-gray-300 bg-gray-100 text-gray-600 focus:ring-2 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-gray-600"
                 />
                 <label
@@ -150,12 +158,12 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href="/dashboard/invoices"
+          href="/dashboard/vinyls"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
         </Link>
-        <Button type="submit">Create Invoice</Button>
+        <Button type="submit">Edit Vinyl</Button>
       </div>
     </form>
   );

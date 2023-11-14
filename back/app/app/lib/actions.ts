@@ -15,13 +15,13 @@ const FormSchema = z.object({
     .number()
     .gt(0, { message: 'Please enter an amount greater than $0.' }),
   status: z.enum(['pending', 'paid'], {
-    invalid_type_error: 'Please select an invoice status.',
+    invalid_type_error: 'Please select an vinyl status.',
   }),
   date: z.string(),
 });
 
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
-const UpdateInvoice = FormSchema.omit({ date: true, id: true });
+const CreateVinyl = FormSchema.omit({ id: true, date: true });
+const UpdateVinyl = FormSchema.omit({ date: true, id: true });
 
 // This is temporary
 export type State = {
@@ -33,9 +33,9 @@ export type State = {
   message?: string | null;
 };
 
-export async function createInvoice(prevState: State, formData: FormData) {
+export async function createVinyl(prevState: State, formData: FormData) {
   // Validate form fields using Zod
-  const validatedFields = CreateInvoice.safeParse({
+  const validatedFields = CreateVinyl.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
     status: formData.get('status'),
@@ -45,7 +45,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
+      message: 'Missing Fields. Failed to Create Vinyl.',
     };
   }
 
@@ -57,27 +57,27 @@ export async function createInvoice(prevState: State, formData: FormData) {
   // Insert data into the database
   try {
     await sql`
-      INSERT INTO invoices (customer_id, amount, status, date)
+      INSERT INTO vinyls (customer_id, amount, status, date)
       VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return {
-      message: 'Database Error: Failed to Create Invoice.',
+      message: 'Database Error: Failed to Create Vinyl.',
     };
   }
 
-  // Revalidate the cache for the invoices page and redirect the user.
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
+  // Revalidate the cache for the vinyls page and redirect the user.
+  revalidatePath('/dashboard/vinyls');
+  redirect('/dashboard/vinyls');
 }
 
-export async function updateInvoice(
+export async function updateVinyl(
   id: string,
   prevState: State,
   formData: FormData,
 ) {
-  const validatedFields = UpdateInvoice.safeParse({
+  const validatedFields = UpdateVinyl.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
     status: formData.get('status'),
@@ -86,7 +86,7 @@ export async function updateInvoice(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Update Invoice.',
+      message: 'Missing Fields. Failed to Update Vinyl.',
     };
   }
 
@@ -95,27 +95,27 @@ export async function updateInvoice(
 
   try {
     await sql`
-      UPDATE invoices
+      UPDATE vinyls
       SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
       WHERE id = ${id}
     `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Invoice.' };
+    return { message: 'Database Error: Failed to Update Vinyl.' };
   }
 
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
+  revalidatePath('/dashboard/vinyls');
+  redirect('/dashboard/vinyls');
 }
 
-export async function deleteInvoice(id: string) {
-  // throw new Error('Failed to Delete Invoice');
+export async function deleteVinyl(id: string) {
+  // throw new Error('Failed to Delete Vinyl');
 
   try {
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath('/dashboard/invoices');
-    return { message: 'Deleted Invoice' };
+    await sql`DELETE FROM vinyls WHERE id = ${id}`;
+    revalidatePath('/dashboard/vinyls');
+    return { message: 'Deleted Vinyl' };
   } catch (error) {
-    return { message: 'Database Error: Failed to Delete Invoice.' };
+    return { message: 'Database Error: Failed to Delete Vinyl.' };
   }
 }
 
