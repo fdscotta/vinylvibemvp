@@ -8,57 +8,45 @@ import { signIn } from '@/auth';
 
 const FormSchema = z.object({
   id: z.string(),
-  customerId: z.string({
-    invalid_type_error: 'Please select a customer.',
+  title: z.string({
+    invalid_type_error: 'Please complete the title.',
   }),
-  amount: z.coerce
-    .number()
-    .gt(0, { message: 'Please enter an amount greater than $0.' }),
-  status: z.enum(['pending', 'paid'], {
-    invalid_type_error: 'Please select an vinyl status.',
-  }),
-  date: z.string(),
 });
 
-const CreateVinyl = FormSchema.omit({ id: true, date: true });
+const CreateVinyl = FormSchema.omit({ id: true });
 const UpdateVinyl = FormSchema.omit({ date: true, id: true });
 
 // This is temporary
 export type State = {
   errors?: {
-    customerId?: string[];
-    amount?: string[];
-    status?: string[];
+    title?: string[];
   };
   message?: string | null;
 };
 
 export async function createVinyl(prevState: State, formData: FormData) {
   // Validate form fields using Zod
+
   const validatedFields = CreateVinyl.safeParse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
-    status: formData.get('status'),
+    title: formData.get('title'),
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Vinyl.',
+      message: 'Missing Fields.',
     };
   }
 
   // Prepare data for insertion into the database
-  const { customerId, amount, status } = validatedFields.data;
-  const amountInCents = amount * 100;
-  const date = new Date().toISOString().split('T')[0];
+  const { title } = validatedFields.data;
 
   // Insert data into the database
   try {
     await sql`
-      INSERT INTO vinyls (customer_id, amount, status, date)
-      VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+      INSERT INTO vinyls (title,picture,user_id)
+      VALUES (${title},'','')
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -78,9 +66,7 @@ export async function updateVinyl(
   formData: FormData,
 ) {
   const validatedFields = UpdateVinyl.safeParse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
-    status: formData.get('status'),
+    title: formData.get('title'),
   });
 
   if (!validatedFields.success) {
@@ -90,13 +76,12 @@ export async function updateVinyl(
     };
   }
 
-  const { customerId, amount, status } = validatedFields.data;
-  const amountInCents = amount * 100;
+  const { title } = validatedFields.data;
 
   try {
     await sql`
       UPDATE vinyls
-      SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+      SET title = ${title}
       WHERE id = ${id}
     `;
   } catch (error) {

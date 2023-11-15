@@ -5,7 +5,6 @@ import {
   User,
 } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
-import { vinyls } from './placeholder-data';
 
 
 export async function fetchLatestVinyls(userID : string) {
