@@ -13,6 +13,7 @@ async function seedUsers (client) {
       CREATE TABLE IF NOT EXISTS users (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
+        phone TEXT NOT NULL UNIQUE,
         email TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL
       );
@@ -25,8 +26,8 @@ async function seedUsers (client) {
       users.map(async (user) => {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         return client.sql`
-        INSERT INTO users (id, name, email, password)
-        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+        INSERT INTO users (id, name, phone, email, password)
+        VALUES (${user.id}, ${user.name}, ${user.phone}, ${user.email}, ${hashedPassword})
         ON CONFLICT (id) DO NOTHING;
       `;
       }),
@@ -51,8 +52,6 @@ async function seedVinyls (client) {
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS vinyls (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        phone TEXT NOT NULL UNIQUE,
         title TEXT NOT NULL,
         picture VARCHAR(255) NOT NULL,
         user_id VARCHAR(255) NOT NULL
@@ -65,8 +64,8 @@ async function seedVinyls (client) {
     const insertedVinyls = await Promise.all(
       vinyls.map(async (vinyl) => {
         return client.sql`
-        INSERT INTO vinyls (id, name, phone, title, picture, user_id)
-        VALUES (${vinyl.id}, ${vinyl.name}, ${vinyl.phone}, ${vinyl.title}, ${vinyl.picture}, ${vinyl.user_id})
+        INSERT INTO vinyls (id, title, picture, user_id)
+        VALUES (${vinyl.id}, ${vinyl.title}, ${vinyl.picture}, ${vinyl.user_id})
         ON CONFLICT (id) DO NOTHING;
       `;
       }),

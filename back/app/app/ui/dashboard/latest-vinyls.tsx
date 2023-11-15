@@ -38,14 +38,14 @@ export default async function LatestVinyls() {
                       {vinyl.title}
                     </p>
                     <p className="hidden text-sm text-gray-500 sm:block">
-                      {vinyl.name}
+                      Aca podria ir algun datito del disco
                     </p>
                   </div>
                 </div>
                 <p
                   className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
                 >
-                  {vinyl.phone}
+                  Aca la fecha de publicacion
                 </p>
               </div>
             );

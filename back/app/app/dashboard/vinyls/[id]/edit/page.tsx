@@ -1,6 +1,6 @@
 import Form from '@/app/ui/vinyls/edit-form';
 import Breadcrumbs from '@/app/ui/vinyls/breadcrumbs';
-import { fetchVinylById, fetchCustomers } from '@/app/lib/data';
+import { fetchVinylById } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 
@@ -10,9 +10,8 @@ export const metadata: Metadata = {
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
-  const [vinyl, customers] = await Promise.all([
+  const [vinyl] = await Promise.all([
     fetchVinylById(id),
-    fetchCustomers(),
   ]);
 
   if (!vinyl) {
@@ -31,7 +30,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           },
         ]}
       />
-      <Form vinyl={vinyl} customers={customers} />
+      <Form vinyl={vinyl} />
     </main>
   );
 }

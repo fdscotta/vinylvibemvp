@@ -14,8 +14,6 @@ export async function fetchLatestVinyls(userID : string) {
     const data = await sql<VinylsTable>`
       SELECT
         id,
-        name,
-        phone,
         title,
         picture,
         user_id
@@ -42,8 +40,6 @@ export async function fetchFilteredVinyls(
     const vinyls = await sql<VinylsTable>`
       SELECT
         id,
-        name,
-        phone,
         title,
         picture,
         user_id
@@ -80,8 +76,6 @@ export async function fetchVinylById(id: string) {
     const data = await sql<VinylsForm>`
       SELECT
         id,
-        name,
-        phone,
         title,
         picture,
         user_id
