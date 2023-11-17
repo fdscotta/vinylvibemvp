@@ -27,7 +27,7 @@ export default async function VinylsTable({
                   <div>
                     <div className="mb-2 flex items-center">
                       <Image
-                        src={vinyl.picture}
+                        src={vinyl.photo}
                         className="mr-2 rounded-full"
                         width={28}
                         height={28}
@@ -37,14 +37,14 @@ export default async function VinylsTable({
                     </div>
                     <p className="text-sm text-gray-500">Year</p>
                   </div>
-                  <VinylStatus status="Vendido" />
+                  <VinylStatus status={vinyl.status} />
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
-                      valor
+                      {formatCurrency(vinyl.adv_cost)}
                     </p>
-                    <p>La fecha</p>
+                    <p>{vinyl.adv_store_location}</p>
                   </div>
                   <div className="flex justify-end gap-2">
                     <UpdateVinyl id={vinyl.id} />
@@ -61,13 +61,13 @@ export default async function VinylsTable({
                   Vinyl Name
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Year
+                  Description
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Price
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Date
+                  Location
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Status
@@ -86,7 +86,7 @@ export default async function VinylsTable({
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex items-center gap-3">
                       <Image
-                        src={vinyl.picture}
+                        src={vinyl.photo}
                         className="rounded-full"
                         width={28}
                         height={28}
@@ -96,16 +96,16 @@ export default async function VinylsTable({
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    Info del disco
+                    {vinyl.description}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    Valor
+                    {formatCurrency(vinyl.adv_cost)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    Fecha de publicacion
+                    {vinyl.adv_store_location}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    Vendido
+                    <VinylStatus status={vinyl.status} />
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">

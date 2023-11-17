@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 import { fetchLatestVinyls } from '@/app/lib/data';
+import VinylStatus from '../vinyls/status';
 
 export default async function LatestVinyls() {
   const latestVinyls = await fetchLatestVinyls('410544b2-4001-4271-9855-fec4b6a6442a');
@@ -27,7 +28,7 @@ export default async function LatestVinyls() {
               >
                 <div className="flex items-center">
                   <Image
-                    src={vinyl.picture}
+                    src={vinyl.photo}
                     alt={`${vinyl.title}'s profile picture`}
                     className="mr-4 rounded-full"
                     width={32}
@@ -38,14 +39,14 @@ export default async function LatestVinyls() {
                       {vinyl.title}
                     </p>
                     <p className="hidden text-sm text-gray-500 sm:block">
-                      Aca podria ir algun datito del disco
+                      {vinyl.description}
                     </p>
                   </div>
                 </div>
                 <p
                   className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
                 >
-                  Aca la fecha de publicacion
+                  <VinylStatus status={vinyl.status} />
                 </p>
               </div>
             );

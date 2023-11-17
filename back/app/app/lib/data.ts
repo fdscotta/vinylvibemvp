@@ -14,7 +14,9 @@ export async function fetchLatestVinyls(userID : string) {
       SELECT
         id,
         title,
-        picture,
+        photo,
+        status,
+        description,
         user_id
       FROM vinyls
       WHERE user_id = ${userID}
@@ -40,7 +42,11 @@ export async function fetchFilteredVinyls(
       SELECT
         id,
         title,
-        picture,
+        photo,
+        description,
+        adv_cost,
+        adv_store_location,
+        status,
         user_id
       FROM vinyls
       WHERE
@@ -76,7 +82,7 @@ export async function fetchVinylById(id: string) {
       SELECT
         id,
         title,
-        picture,
+        photo,
         user_id
       FROM vinyls
       WHERE id = ${id};

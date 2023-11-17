@@ -53,8 +53,19 @@ async function seedVinyls (client) {
       CREATE TABLE IF NOT EXISTS vinyls (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         title TEXT NOT NULL,
-        picture VARCHAR(255) NOT NULL,
-        user_id VARCHAR(255) NOT NULL
+        album_status VARCHAR(255) NOT NULL,
+        media_condition VARCHAR(255) NOT NULL,
+        packaging_condition VARCHAR(255) NOT NULL,
+        is_auction BOOLEAN NOT NULL,
+        accept_offers BOOLEAN NOT NULL,
+        listing_price INT NOT NULL,
+        photo VARCHAR(255) NOT NULL,
+        description VARCHAR(255) NOT NULL,
+        adv_store_location VARCHAR(255) NOT NULL,
+        adv_cost INT NOT NULL,
+        adv_sku VARCHAR(255) NOT NULL,
+        user_id UUID NOT NULL,
+        status VARCHAR(255) NOT NULL
       );
     `;
 
@@ -64,8 +75,38 @@ async function seedVinyls (client) {
     const insertedVinyls = await Promise.all(
       vinyls.map(async (vinyl) => {
         return client.sql`
-        INSERT INTO vinyls (id, title, picture, user_id)
-        VALUES (${vinyl.id}, ${vinyl.title}, ${vinyl.picture}, ${vinyl.user_id})
+        INSERT INTO vinyls (
+          title,
+          album_status,
+          media_condition,
+          packaging_condition,
+          is_auction,
+          accept_offers,
+          listing_price,
+          photo,
+          description,
+          adv_store_location,
+          adv_cost,
+          adv_sku,
+          user_id,
+          status
+        )
+        VALUES (
+          ${vinyl.title},
+          ${vinyl.album_status},
+          ${vinyl.media_condition},
+          ${vinyl.packaging_condition},
+          ${vinyl.is_auction},
+          ${vinyl.accept_offers},
+          ${vinyl.listing_price},
+          ${vinyl.photo},
+          ${vinyl.description},
+          ${vinyl.adv_store_location},
+          ${vinyl.adv_cost},
+          ${vinyl.adv_sku},
+          ${vinyl.user_id},
+          ${vinyl.status}
+        )
         ON CONFLICT (id) DO NOTHING;
       `;
       }),
