@@ -11,14 +11,7 @@ export async function fetchLatestVinyls(userID : string) {
   noStore();
   try {
     const data = await sql<VinylsTable>`
-      SELECT
-        id,
-        title,
-        photo,
-        status,
-        description,
-        user_id,
-        publish_date
+      SELECT *
       FROM vinyls
       WHERE user_id = ${userID}
       LIMIT 5`;
@@ -40,16 +33,7 @@ export async function fetchFilteredVinyls(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
     const vinyls = await sql<VinylsTable>`
-      SELECT
-        id,
-        title,
-        photo,
-        description,
-        adv_cost,
-        adv_store_location,
-        status,
-        user_id,
-        publish_date
+      SELECT *
       FROM vinyls
       WHERE
         title::text ILIKE ${`%${query}%`}
@@ -81,12 +65,7 @@ export async function fetchVinylById(id: string) {
   noStore();
   try {
     const data = await sql<VinylsForm>`
-      SELECT
-        id,
-        title,
-        photo,
-        user_id,
-        publish_date
+      SELECT *
       FROM vinyls
       WHERE id = ${id};
     `;
