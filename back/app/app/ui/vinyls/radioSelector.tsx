@@ -4,7 +4,7 @@ export default function radioSelector (
         fieldName,
         choices,
         choicesSlug,
-        defaultValue
+        defaultValue = ''
     }: {
         fieldId: string,
         fieldName: string,
