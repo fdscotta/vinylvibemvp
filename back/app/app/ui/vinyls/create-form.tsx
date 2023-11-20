@@ -37,6 +37,7 @@ export default function Form() {
                 fieldName="Album Status"
                 choices={["It's Used","It's Brand New"]}
                 choicesSlug={["used","new"]}
+                defaultValue=''
                 />
               <div id="status-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.album_status &&
@@ -55,6 +56,7 @@ export default function Form() {
                 fieldName="Media Condition"
                 choices={["M", "NM", "VG+", "VG", "G+", "G", "F", "P"]}
                 choicesSlug={["m", "nm", "vg+", "vg", "g+", "g", "f", "p"]}
+                defaultValue=''
                 />
               <div id="status-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.media_condition &&
@@ -73,6 +75,7 @@ export default function Form() {
                 fieldName="Packaging Condition"
                 choices={["M", "NM", "VG+", "VG", "G+", "G", "F", "P", "X", "NC"]}
                 choicesSlug={["m", "nm", "vg+", "vg", "g+", "g", "f", "p", "x", "nc"]}
+                defaultValue=''
                 />
               <div id="status-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.packaging_condition &&
@@ -91,6 +94,7 @@ export default function Form() {
                 fieldName="Is Auction"
                 choices={["True", "False"]}
                 choicesSlug={["true", "false"]}
+                defaultValue=''
                 />
               <div id="status-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.is_auction &&
@@ -109,6 +113,7 @@ export default function Form() {
                 fieldName="Accept Offers"
                 choices={["True", "False"]}
                 choicesSlug={["true", "false"]}
+                defaultValue=''
                 />
               <div id="status-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.accept_offers &&
