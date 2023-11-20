@@ -5,20 +5,13 @@ import {
   User,
 } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
-import { vinyls } from './placeholder-data';
 
 
 export async function fetchLatestVinyls(userID : string) {
   noStore();
   try {
     const data = await sql<VinylsTable>`
-      SELECT
-        id,
-        name,
-        phone,
-        title,
-        picture,
-        user_id
+      SELECT *
       FROM vinyls
       WHERE user_id = ${userID}
       LIMIT 5`;
@@ -40,13 +33,7 @@ export async function fetchFilteredVinyls(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
     const vinyls = await sql<VinylsTable>`
-      SELECT
-        id,
-        name,
-        phone,
-        title,
-        picture,
-        user_id
+      SELECT *
       FROM vinyls
       WHERE
         title::text ILIKE ${`%${query}%`}
@@ -78,13 +65,7 @@ export async function fetchVinylById(id: string) {
   noStore();
   try {
     const data = await sql<VinylsForm>`
-      SELECT
-        id,
-        name,
-        phone,
-        title,
-        picture,
-        user_id
+      SELECT *
       FROM vinyls
       WHERE id = ${id};
     `;
