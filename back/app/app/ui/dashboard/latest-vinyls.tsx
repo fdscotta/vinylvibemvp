@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 import { fetchLatestVinyls } from '@/app/lib/data';
 import VinylStatus from '../vinyls/status';
+import { formatDateToLocal } from '@/app/lib/utils';
 
 export default async function LatestVinyls() {
   const latestVinyls = await fetchLatestVinyls('410544b2-4001-4271-9855-fec4b6a6442a');
@@ -39,7 +40,7 @@ export default async function LatestVinyls() {
                       {vinyl.title}
                     </p>
                     <p className="hidden text-sm text-gray-500 sm:block">
-                      {vinyl.description}
+                      {formatDateToLocal(vinyl.publish_date)}
                     </p>
                   </div>
                 </div>

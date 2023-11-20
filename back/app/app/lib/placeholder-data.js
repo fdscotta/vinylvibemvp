@@ -22,7 +22,8 @@ const vinyls = [{
   adv_cost: 718046,
   adv_sku: "FR29 1922 1286 063T OL8E AY21 512",
   status: 'publish',
-  user_id: "410544b2-4001-4271-9855-fec4b6a6442a"
+  user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+  publish_date: '2023-11-23'
 }, {
   title: "Weight of Water, The",
   album_status: "used",
@@ -37,7 +38,8 @@ const vinyls = [{
   adv_cost: 784906,
   adv_sku: "HR98 0096 8819 3920 2351 5",
   status: 'draft',
-  user_id: "410544b2-4001-4271-9855-fec4b6a6442a"
+  user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+  publish_date: '2023-11-12'
 }, {
   title: "Flowers of Shanghai (Hai shang hua)",
   album_status: "new",
@@ -52,7 +54,8 @@ const vinyls = [{
   adv_cost: 257856,
   adv_sku: "LV67 HWVO EIE5 BCVG DQJM N",
   status: 'draft',
-  user_id: "410544b2-4001-4271-9855-fec4b6a6442a"
+  user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+  publish_date: '2023-11-02'
 }, {
   title: "Mad Love (Sappho)",
   album_status: "used",
@@ -67,7 +70,8 @@ const vinyls = [{
   adv_cost: 570799,
   adv_sku: "AZ48 MCME 128S EQII ERYY WOOY XPKJ",
   status: 'publish',
-  user_id: "410544b2-4001-4271-9855-fec4b6a6442a"
+  user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+  publish_date: '2023-01-23'
 }, {
   title: "Crimewave",
   album_status: "new",
@@ -82,7 +86,8 @@ const vinyls = [{
   adv_cost: 461714,
   adv_sku: "MC95 4887 7411 75EQ VGET KXUQ E93",
   status: 'draft',
-  user_id: "410544b2-4001-4271-9855-fec4b6a6442a"
+  user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+  publish_date: '2023-06-11'
 }, {
   title: "Time of Eve (Eve no jikan)",
   album_status: "used",
@@ -97,7 +102,8 @@ const vinyls = [{
   adv_cost: 148858,
   adv_sku: "DO75 GTJZ 4133 7750 1434 1608 2154",
   status: 'publish',
-  user_id: "410544b2-4001-4271-9855-fec4b6a6442a"
+  user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+  publish_date: '2023-09-10'
 }, {
   title: "Cold Mountain",
   album_status: "used",
@@ -112,7 +118,8 @@ const vinyls = [{
   adv_cost: 66689,
   adv_sku: "AD56 4443 3347 FDLY LLNX BZDY",
   status: 'draft',
-  user_id: "410544b2-4001-4271-9855-fec4b6a6442a"
+  user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+  publish_date: '2023-09-26'
 }, {
   title: "Palmetto",
   album_status: "new",
@@ -127,7 +134,8 @@ const vinyls = [{
   adv_cost: 414633,
   adv_sku: "MR45 6105 1523 1064 8685 1028 586",
   status: 'draft',
-  user_id: "410544b2-4001-4271-9855-fec4b6a6442a"
+  user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+  publish_date: '2023-07-23'
 }, {
   title: "Casino Royale",
   album_status: "new",
@@ -142,7 +150,8 @@ const vinyls = [{
   adv_cost: 832288,
   adv_sku: "GB32 CSVR 6912 8362 6214 71",
   status: 'publish',
-  user_id: "410544b2-4001-4271-9855-fec4b6a6442a"
+  user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+  publish_date: '2023-10-01'
 }, {
   title: "Hands of Orlac, The (Orlacs Hände)",
   album_status: "new",
@@ -157,7 +166,8 @@ const vinyls = [{
   adv_cost: 169399,
   adv_sku: "FR26 2695 8673 62KQ N8WP JO7Q V16",
   status: 'publish',
-  user_id: "410544b2-4001-4271-9855-fec4b6a6442a"
+  user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
+  publish_date: '2023-10-29'
 }];
 
 module.exports = {

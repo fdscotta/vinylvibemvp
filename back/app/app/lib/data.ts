@@ -17,7 +17,8 @@ export async function fetchLatestVinyls(userID : string) {
         photo,
         status,
         description,
-        user_id
+        user_id,
+        publish_date
       FROM vinyls
       WHERE user_id = ${userID}
       LIMIT 5`;
@@ -47,7 +48,8 @@ export async function fetchFilteredVinyls(
         adv_cost,
         adv_store_location,
         status,
-        user_id
+        user_id,
+        publish_date
       FROM vinyls
       WHERE
         title::text ILIKE ${`%${query}%`}
@@ -83,7 +85,8 @@ export async function fetchVinylById(id: string) {
         id,
         title,
         photo,
-        user_id
+        user_id,
+        publish_date
       FROM vinyls
       WHERE id = ${id};
     `;

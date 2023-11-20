@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 
 async function seedUsers (client) {
   try {
+    await client.sql`DROP TABLE users`;
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
     // Create the "users" table if it doesn't exist
     const createTable = await client.sql`
@@ -47,6 +48,7 @@ async function seedUsers (client) {
 
 async function seedVinyls (client) {
   try {
+    await client.sql`DROP TABLE vinyls`;
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
     // Create the "vinyls" table if it doesn't exist
     const createTable = await client.sql`
@@ -65,7 +67,8 @@ async function seedVinyls (client) {
         adv_cost INT NOT NULL,
         adv_sku VARCHAR(255) NOT NULL,
         user_id UUID NOT NULL,
-        status VARCHAR(255) NOT NULL
+        status VARCHAR(255) NOT NULL,
+        publish_date DATE NOT NULL
       );
     `;
 
@@ -89,7 +92,8 @@ async function seedVinyls (client) {
           adv_cost,
           adv_sku,
           user_id,
-          status
+          status,
+          publish_date
         )
         VALUES (
           ${vinyl.title},
@@ -105,7 +109,8 @@ async function seedVinyls (client) {
           ${vinyl.adv_cost},
           ${vinyl.adv_sku},
           ${vinyl.user_id},
-          ${vinyl.status}
+          ${vinyl.status},
+          ${vinyl.publish_date}
         )
         ON CONFLICT (id) DO NOTHING;
       `;

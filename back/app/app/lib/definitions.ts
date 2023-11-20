@@ -25,6 +25,7 @@ export type Vinyls = {
     adv_sku: string,
     user_id: string,
     status: 'publish' | 'draft';
+    publish_date: string;
 };
 
 export type LatestVinyls = {
@@ -43,6 +44,7 @@ export type LatestVinyls = {
     adv_sku: string,
     user_id: string,
     status: 'publish' | 'draft';
+    publish_date: string;
 };
 
 export type VinylsTable = {
@@ -61,6 +63,7 @@ export type VinylsTable = {
     adv_sku: string,
     user_id: string,
     status: 'publish' | 'draft';
+    publish_date: string;
 };
 
 export type VinylsForm = {
@@ -79,4 +82,5 @@ export type VinylsForm = {
     adv_sku: string,
     user_id: string,
     status: 'publish' | 'draft';
+    publish_date: string;
 };

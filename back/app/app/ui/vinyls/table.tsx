@@ -61,7 +61,7 @@ export default async function VinylsTable({
                   Vinyl Name
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Description
+                  Date
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Price
@@ -96,7 +96,7 @@ export default async function VinylsTable({
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {vinyl.description}
+                    {formatDateToLocal(vinyl.publish_date)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {formatCurrency(vinyl.adv_cost)}
