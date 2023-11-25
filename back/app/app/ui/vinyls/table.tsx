@@ -42,9 +42,9 @@ export default async function VinylsTable({
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
-                      {formatCurrency(vinyl.adv_cost)}
+                      {formatCurrency(vinyl.price)}
                     </p>
-                    <p>{vinyl.adv_store_location}</p>
+                    <p>{vinyl.address}</p>
                   </div>
                   <div className="flex justify-end gap-2">
                     <UpdateVinyl id={vinyl.id} />
@@ -99,10 +99,10 @@ export default async function VinylsTable({
                     {formatDateToLocal(vinyl.publish_date)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {formatCurrency(vinyl.adv_cost)}
+                    {formatCurrency(vinyl.price)}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
-                    {vinyl.adv_store_location}
+                    {vinyl.address}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     <VinylStatus status={vinyl.status} />

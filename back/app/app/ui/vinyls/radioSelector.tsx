@@ -26,7 +26,7 @@ export default function radioSelector (
                         return (
                             <div key={index} className="flex items-center">
                                 <input
-                                    id={choicesSlug[index]}
+                                    id={fieldId + '_' + choicesSlug[index]}
                                     name={fieldId}
                                     type="radio"
                                     defaultChecked={defaultC}
@@ -34,7 +34,7 @@ export default function radioSelector (
                                     className="text-white-600 h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 focus:ring-2"
                                 />
                                 <label
-                                    htmlFor={choicesSlug[index]}
+                                    htmlFor={fieldId + '_' + choicesSlug[index]}
                                     className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
                                 >
                                     {choice}
