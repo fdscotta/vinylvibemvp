@@ -1,3 +1,4 @@
+'use server'
 import { unstable_noStore as noStore } from 'next/cache';
 import { DiscogsClient } from '@lionralfs/discogs-client';
 
@@ -7,14 +8,14 @@ export async function discogSearchByName(name: string) {
   try {
     let client = new DiscogsClient({
         auth: {
-            method: 'discogs',
-            consumerKey: process.env.DISCOG_CONSUMER_KEY,
-            consumerSecret: process.env.DISCOG_SECRET,
+          method: 'discogs',
+          consumerKey: process.env.DISCOGS_CONSUMER_KEY,
+          consumerSecret: process.env.DISCOGS_SECRET
         },
     });
 
     let db = client.database();
-    return await db.search({ query: name, type: 'q' })
+    return await db.search({ query: name })
         .then(function ({ data }) {
             return data.results;
         });
