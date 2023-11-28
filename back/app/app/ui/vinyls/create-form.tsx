@@ -10,7 +10,11 @@ import RadioSelector from './radioSelector';
 // import DiscogFinder from './discogFinder';
 // import { useSearchParams } from 'next/navigation';
 
-export default function Form() {
+interface Props {
+  vinyl:any
+}
+
+export default function Form({vinyl}:Props) {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createVinyl, initialState);
   // const [vinylSelected, setVinylSelected] = useState(false);

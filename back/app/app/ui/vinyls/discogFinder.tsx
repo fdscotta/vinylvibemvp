@@ -6,17 +6,19 @@ import { useDebouncedCallback } from 'use-debounce';
 
 interface Props {
     placeholder: string,
+    setVinyl: (vinyl:any) => void,
 }
 
-export default function DiscogFinder ({placeholder}: Props) {
+export default function DiscogFinder({ placeholder, setVinyl }: Props) {
 
     const searchParams = useSearchParams();
-    const [results, setResults] = useState([])
+    const [results, setResults] = useState([]);
 
     const handleSearch = useDebouncedCallback((term) => {
-        discogSearchByName(term).then((data) =>(
-            setResults(data)
-        ));
+        discogSearchByName(term).then((data) =>{
+            setResults(data);
+            setVinyl(data[0])
+        });
     }, 300);
 
     return (
