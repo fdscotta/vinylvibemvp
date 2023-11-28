@@ -1,34 +1,24 @@
 'use client'
 import { discogSearchByName } from '@/app/lib/discog';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
-export default function DiscogFinder (
-    {
-        placeholder,
-    }: {
-        placeholder: string,
-    }) {
+interface Props {
+    placeholder: string,
+}
+
+export default function DiscogFinder ({placeholder}: Props) {
+
     const searchParams = useSearchParams();
-    const { replace } = useRouter();
-    const pathname = usePathname();
     const [results, setResults] = useState([])
 
     const handleSearch = useDebouncedCallback((term) => {
-
         discogSearchByName(term).then((data) =>(
             setResults(data)
         ));
-/*         const params = new URLSearchParams(searchParams);
-
-        if (term) {
-            params.set('query', term);
-        } else {
-            params.delete('query');
-        }
-        replace(`${pathname}?${params.toString()}`); */
     }, 300);
+
     return (
         <>
             <label htmlFor="title" className="mb-2 block text-sm font-medium">

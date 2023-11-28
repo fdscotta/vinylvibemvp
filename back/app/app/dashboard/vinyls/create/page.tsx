@@ -1,6 +1,7 @@
 import Form from '@/app/ui/vinyls/create-form';
 import Breadcrumbs from '@/app/ui/vinyls/breadcrumbs';
 import { Metadata } from 'next';
+import DiscogFinder from '@/app/ui/vinyls/discogFinder';
 
 export const metadata: Metadata = {
   title: 'Create Vinyl',
@@ -19,6 +20,9 @@ export default async function Page() {
           },
         ]}
       />
+
+      <DiscogFinder placeholder={'Enter the title'} />
+
       <Form />
     </main>
   );

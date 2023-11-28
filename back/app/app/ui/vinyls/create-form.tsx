@@ -6,32 +6,29 @@ import { createVinyl } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { CurrencyDollarIcon } from '@heroicons/react/24/outline';
 import RadioSelector from './radioSelector';
-import { useEffect, useState } from 'react';
-import DiscogFinder from './discogFinder';
-import { useSearchParams } from 'next/navigation';
+// import { useEffect, useState } from 'react';
+// import DiscogFinder from './discogFinder';
+// import { useSearchParams } from 'next/navigation';
 
 export default function Form() {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createVinyl, initialState);
-  const [vinylSelected, setVinylSelected] = useState(false);
-  const searchParams = useSearchParams();
+  // const [vinylSelected, setVinylSelected] = useState(false);
+  // const searchParams = useSearchParams();
 
-  const queryParam = searchParams.get('query');
-  useEffect(() => {
-    if (queryParam && queryParam.toString().trim() !== '') {
-      setVinylSelected(true);
-    } else {
-      setVinylSelected(false);
-    }
-  }, [queryParam]);
+  // const queryParam = searchParams.get('query');
+  // useEffect(() => {
+  //   if (queryParam && queryParam.toString().trim() !== '') {
+  //     setVinylSelected(true);
+  //   } else {
+  //     setVinylSelected(false);
+  //   }
+  // }, [queryParam]);
 
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         <div className="mb-4">
-          <DiscogFinder placeholder="Enter the Title"/>
-          { vinylSelected ? (
-            <>
               <div className="relative mt-2 rounded-md">
                 <fieldset>
                   <RadioSelector
@@ -197,8 +194,7 @@ export default function Form() {
                   ))}
                 </div>
               ) : null}
-            </>
-          ) : null}
+
         </div>
 
         {state.message ? (
@@ -207,19 +203,17 @@ export default function Form() {
           </div>
         ) : null}
       </div>
-          { vinylSelected ? (
-            <>
-              <div className="mt-6 flex justify-end gap-4">
-                <Link
-                  href="/dashboard/vinyls"
-                  className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-                >
-                  Cancel
-                </Link>
-                <Button type="submit">Create Vinyl</Button>
-              </div>
-            </>
-          ): null}
+
+      <div className="mt-6 flex justify-end gap-4">
+        <Link
+          href="/dashboard/vinyls"
+          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+        >
+          Cancel
+        </Link>
+        <Button type="submit">Create Vinyl</Button>
+      </div>
+
     </form>
   );
 }
