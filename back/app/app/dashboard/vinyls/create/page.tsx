@@ -26,7 +26,7 @@ export default function Page() {
         ]}
       />
 
-      <DiscogFinder placeholder={'Enter the title'} setVinyl={setVinyl} />
+      <DiscogFinder placeholder={'Enter the title'} vinyl={vinyl} setVinyl={setVinyl} />
 
       {vinyl && <Form vinyl={vinyl} />}
     </main>

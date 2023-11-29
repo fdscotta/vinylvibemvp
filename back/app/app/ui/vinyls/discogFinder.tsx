@@ -1,15 +1,17 @@
 'use client'
 import { discogSearchByName } from '@/app/lib/discog';
+import { vinyls } from '@/app/lib/placeholder-data';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 interface Props {
     placeholder: string,
+    vinyl: any,
     setVinyl: (vinyl:any) => void,
 }
 
-export default function DiscogFinder({ placeholder, setVinyl }: Props) {
+export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
 
     const searchParams = useSearchParams();
     const [results, setResults] = useState([]);
@@ -17,7 +19,6 @@ export default function DiscogFinder({ placeholder, setVinyl }: Props) {
     const handleSearch = useDebouncedCallback((term) => {
         discogSearchByName(term).then((data) =>{
             setResults(data);
-            setVinyl(data[0])
         });
     }, 300);
 
@@ -26,7 +27,7 @@ export default function DiscogFinder({ placeholder, setVinyl }: Props) {
             <label htmlFor="title" className="mb-2 block text-sm font-medium">
             Title
             </label>
-            <div className="px-12" style={{ height: "90vh" }}>
+            <div className="px-12" style={{ height: "150px" }}>
                 <div className="relative">
                     <div className="relative">
                         <div className="absolute top-0 bottom-0 left-0 flex items-center px-5">
@@ -44,7 +45,7 @@ export default function DiscogFinder({ placeholder, setVinyl }: Props) {
                         onKeyUp={(e) => {
                             handleSearch(e.target.value);
                         }}
-                        defaultValue={searchParams.get('query')?.toString()}
+                        value={vinyl?.title}
                         />
                     </div>
 
@@ -53,8 +54,13 @@ export default function DiscogFinder({ placeholder, setVinyl }: Props) {
                             Recommended
                         </li>
                         {results?.map((item) => (
-                            <li key={item.id}
-                            className="grid grid-cols-10 gap-4 justify-center items-center cursor-pointer px-4 py-2 rounded-lg hover:bg-gray-50">
+                            <li
+                                key={item.id}
+                                onClick={()=>{
+                                    setVinyl(item)
+                                    setResults([])
+                                }}
+                                className="grid grid-cols-10 gap-4 justify-center items-center cursor-pointer px-4 py-2 rounded-lg hover:bg-gray-50">
                                 <div className="flex justify-center items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-pink-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
