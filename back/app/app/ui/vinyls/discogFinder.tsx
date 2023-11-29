@@ -1,7 +1,5 @@
 'use client'
 import { discogSearchByName } from '@/app/lib/discog';
-import { vinyls } from '@/app/lib/placeholder-data';
-import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -13,7 +11,6 @@ interface Props {
 
 export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
 
-    const searchParams = useSearchParams();
     const [results, setResults] = useState([]);
 
     const handleSearch = useDebouncedCallback((term) => {
@@ -44,6 +41,9 @@ export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
                         aria-describedby="amount-error"
                         onKeyUp={(e) => {
                             handleSearch(e.target.value);
+                        }}
+                        onChange={(e)=>{
+                            setVinyl(null)
                         }}
                         value={vinyl?.title}
                         />

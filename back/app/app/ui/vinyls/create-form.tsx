@@ -6,9 +6,6 @@ import { createVinyl } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { CurrencyDollarIcon } from '@heroicons/react/24/outline';
 import RadioSelector from './radioSelector';
-// import { useEffect, useState } from 'react';
-// import DiscogFinder from './discogFinder';
-// import { useSearchParams } from 'next/navigation';
 
 interface Props {
   vinyl:any
@@ -17,17 +14,6 @@ interface Props {
 export default function Form({vinyl}:Props) {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createVinyl, initialState);
-  // const [vinylSelected, setVinylSelected] = useState(false);
-  // const searchParams = useSearchParams();
-
-  // const queryParam = searchParams.get('query');
-  // useEffect(() => {
-  //   if (queryParam && queryParam.toString().trim() !== '') {
-  //     setVinylSelected(true);
-  //   } else {
-  //     setVinylSelected(false);
-  //   }
-  // }, [queryParam]);
 
   console.log(vinyl)
 
