@@ -9,8 +9,8 @@ export async function discogSearchByName(name: string) {
     let client = new DiscogsClient({
         auth: {
           method: 'discogs',
-          consumerKey: process.env.DISCOGS_CONSUMER_KEY,
-          consumerSecret: process.env.DISCOGS_SECRET
+          consumerKey: process.env.DISCOGS_SECRET,
+          consumerSecret: process.env.DISCOGS_CONSUMER_KEY
         },
     });
 
