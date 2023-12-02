@@ -19,7 +19,8 @@ const vinyls = [{
   sku: "FR29 1922 1286 063T OL8E AY21 512",
   status: 'publish',
   user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
-  publish_date: '2023-11-23'
+  publish_date: '2023-11-23',
+  discogs_data_id: 1
 }, {
   title: "Weight of Water, The",
   media_condition: 'vg',
@@ -31,7 +32,8 @@ const vinyls = [{
   sku: "HR98 0096 8819 3920 2351 5",
   status: 'draft',
   user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
-  publish_date: '2023-11-12'
+  publish_date: '2023-11-12',
+  discogs_data_id: 1
 }, {
   title: "Flowers of Shanghai (Hai shang hua)",
   media_condition: 'vg',
@@ -43,7 +45,8 @@ const vinyls = [{
   sku: "LV67 HWVO EIE5 BCVG DQJM N",
   status: 'draft',
   user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
-  publish_date: '2023-11-02'
+  publish_date: '2023-11-02',
+  discogs_data_id: 1
 }, {
   title: "Mad Love (Sappho)",
   media_condition: 'm',
@@ -55,7 +58,8 @@ const vinyls = [{
   sku: "AZ48 MCME 128S EQII ERYY WOOY XPKJ",
   status: 'publish',
   user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
-  publish_date: '2023-01-23'
+  publish_date: '2023-01-23',
+  discogs_data_id: 1
 }, {
   title: "Crimewave",
   media_condition: 'vg',
@@ -67,7 +71,8 @@ const vinyls = [{
   sku: "MC95 4887 7411 75EQ VGET KXUQ E93",
   status: 'draft',
   user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
-  publish_date: '2023-06-11'
+  publish_date: '2023-06-11',
+  discogs_data_id: 1
 }, {
   title: "Time of Eve (Eve no jikan)",
   media_condition: 'm',
@@ -79,7 +84,8 @@ const vinyls = [{
   sku: "DO75 GTJZ 4133 7750 1434 1608 2154",
   status: 'publish',
   user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
-  publish_date: '2023-09-10'
+  publish_date: '2023-09-10',
+  discogs_data_id: 1
 }, {
   title: "Cold Mountain",
   media_condition: 'm',
@@ -91,7 +97,8 @@ const vinyls = [{
   sku: "AD56 4443 3347 FDLY LLNX BZDY",
   status: 'draft',
   user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
-  publish_date: '2023-09-26'
+  publish_date: '2023-09-26',
+  discogs_data_id: 1
 }, {
   title: "Palmetto",
   media_condition: 'vg',
@@ -103,7 +110,8 @@ const vinyls = [{
   sku: "MR45 6105 1523 1064 8685 1028 586",
   status: 'draft',
   user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
-  publish_date: '2023-07-23'
+  publish_date: '2023-07-23',
+  discogs_data_id: 1
 }, {
   title: "Casino Royale",
   media_condition: 'g',
@@ -115,7 +123,8 @@ const vinyls = [{
   sku: "GB32 CSVR 6912 8362 6214 71",
   status: 'publish',
   user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
-  publish_date: '2023-10-01'
+  publish_date: '2023-10-01',
+  discogs_data_id: 1
 }, {
   title: "Hands of Orlac, The (Orlacs Hände)",
   media_condition: 'vg',
@@ -127,7 +136,8 @@ const vinyls = [{
   sku: "FR26 2695 8673 62KQ N8WP JO7Q V16",
   status: 'publish',
   user_id: "410544b2-4001-4271-9855-fec4b6a6442a",
-  publish_date: '2023-10-29'
+  publish_date: '2023-10-29',
+  discogs_data_id: 1
 }];
 
 module.exports = {

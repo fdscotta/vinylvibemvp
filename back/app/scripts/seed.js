@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 
 async function seedUsers (client) {
   try {
-    await client.sql`DROP TABLE users`;
+    // await client.sql`DROP TABLE users`;
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
     // Create the "users" table if it doesn't exist
     const createTable = await client.sql`
@@ -48,7 +48,7 @@ async function seedUsers (client) {
 
 async function seedVinyls (client) {
   try {
-    await client.sql`DROP TABLE vinyls`;
+    //await client.sql`DROP TABLE vinyls`;
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
     // Create the "vinyls" table if it doesn't exist
     const createTable = await client.sql`
@@ -64,7 +64,8 @@ async function seedVinyls (client) {
         sku VARCHAR(255) NOT NULL,
         user_id UUID NOT NULL,
         status VARCHAR(255) NOT NULL,
-        publish_date DATE NOT NULL
+        publish_date DATE NOT NULL,
+        discogs_data_id INT not NUll
       );
     `;
 
@@ -85,7 +86,8 @@ async function seedVinyls (client) {
           sku,
           user_id,
           status,
-          publish_date
+          publish_date,
+          discogs_data_id
         )
         VALUES (
           ${vinyl.title},
@@ -98,7 +100,8 @@ async function seedVinyls (client) {
           ${vinyl.sku},
           ${vinyl.user_id},
           ${vinyl.status},
-          ${vinyl.publish_date}
+          ${vinyl.publish_date},
+          ${vinyl.discogs_data_id}
         )
         ON CONFLICT (id) DO NOTHING;
       `;
@@ -117,11 +120,35 @@ async function seedVinyls (client) {
   }
 }
 
+async function createDiscogsData (client) {
+  try {
+
+    //await client.sql`DROP TABLE discog_data`;
+    // Create the "users" table if it doesn't exist
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS discogs_data (
+        id INT PRIMARY KEY,
+        json_response json NOT NULL
+      );
+    `;
+
+    console.log(`Created "users" table`);
+
+    return {
+      createTable,
+    };
+  } catch (error) {
+    console.error('Error seeding discogs_data:', error);
+    throw error;
+  }
+}
+
 async function main () {
   const client = await db.connect();
 
   await seedVinyls(client);
   await seedUsers(client);
+  await createDiscogsData(client);
 
   await client.end();
 }

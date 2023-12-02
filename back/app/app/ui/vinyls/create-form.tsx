@@ -15,8 +15,6 @@ export default function Form({vinyl}:Props) {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createVinyl, initialState);
 
-  console.log(vinyl)
-
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -175,6 +173,16 @@ export default function Form({vinyl}:Props) {
                     ))}
                 </div>
               </div>
+
+{/*                 <input
+                  id="discogs_vinyl_id"
+                  name="discogs_vinyl_id"
+                  type="hidden"
+                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                  aria-describedby="amount-error"
+                  value={discogs_vinyl_id}
+                /> */}
+
               {state.errors?.title ? (
                 <div
                   id="amount-error"

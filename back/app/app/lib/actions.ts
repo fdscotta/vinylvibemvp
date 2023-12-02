@@ -35,7 +35,7 @@ const FormSchema = z.object({
   }),
 });
 
-const CreateVinyl = FormSchema.omit({ id: true });
+const CreateVinyl = FormSchema.omit({ id: true, discogs_vinyl_id: true });
 const UpdateVinyl = FormSchema.omit({ date: true, id: true });
 
 // This is temporary
@@ -49,6 +49,7 @@ export type State = {
     description?: string[];
     address?: string[];
     sku?: string[];
+    discogs_vinyl_id?: number[]
   };
   message?: string | null;
 };
@@ -65,6 +66,7 @@ export async function createVinyl(prevState: State, formData: FormData) {
     description: formData.get('description'),
     address: formData.get('address'),
     sku: formData.get('sku'),
+    discogs_vinyl_id: formData.get('discogs_vinyl_id')
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -84,7 +86,8 @@ export async function createVinyl(prevState: State, formData: FormData) {
     photo,
     description,
     address,
-    sku
+    sku,
+    discogs_vinyl_id
   } = validatedFields.data;
   const date = new Date().toISOString().split('T')[0];
 
@@ -102,7 +105,8 @@ export async function createVinyl(prevState: State, formData: FormData) {
         sku,
         user_id,
         status,
-        publish_date
+        publish_date,
+        discogs_data_id
       )
       VALUES (
         ${title},
@@ -115,7 +119,8 @@ export async function createVinyl(prevState: State, formData: FormData) {
         ${sku},
         '410544b2-4001-4271-9855-fec4b6a6442a',
         'publish',
-        ${date}
+        ${date},
+        ${discogs_vinyl_id}
       )
     `;
   } catch (error) {
