@@ -128,7 +128,7 @@ async function createDiscogsData (client) {
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS discogs_data (
         id INT PRIMARY KEY,
-        json_response json NOT NULL
+        json_response jsonb NOT NULL
       );
     `;
 

@@ -8,9 +8,6 @@ import { signIn } from '@/auth';
 
 const FormSchema = z.object({
   id: z.string(),
-  title: z.string({
-    invalid_type_error: 'Please complete the title.',
-  }),
   media_condition: z.string({
     invalid_type_error: 'Please complete the Media Condition.',
   }),
@@ -21,27 +18,29 @@ const FormSchema = z.object({
     .number()
     .gt(0, { message: 'Please enter an Price greater than $0.'
   }),
-  photo: z.string({
-    invalid_type_error: 'Please complete the Photo.',
+  photo: z.string().url({
+    message: 'Please complete the Photo URL.',
   }),
-  description: z.string({
-    invalid_type_error: 'Please complete the Description.',
+  description: z.string().nonempty(
+  {
+    message: 'Please complete the Description.',
   }),
-  address: z.string({
-    invalid_type_error: 'Please complete the Address.',
+  address: z.string().nonempty({
+    message: 'Please complete the Address.',
   }),
-  sku: z.string({
-    invalid_type_error: 'Please complete the SKU.',
+  sku: z.string().nonempty({
+    message: 'Please complete the SKU.',
   }),
+  discogs_vinyl_id: z.coerce.number(),
+  title: z.string()
 });
 
-const CreateVinyl = FormSchema.omit({ id: true, discogs_vinyl_id: true });
+const CreateVinyl = FormSchema.omit({ id: true});
 const UpdateVinyl = FormSchema.omit({ date: true, id: true });
 
 // This is temporary
 export type State = {
   errors?: {
-    title?: string[];
     media_condition?: string[];
     packaging_condition?: string[];
     price?: string[];
@@ -49,7 +48,6 @@ export type State = {
     description?: string[];
     address?: string[];
     sku?: string[];
-    discogs_vinyl_id?: number[]
   };
   message?: string | null;
 };
@@ -58,7 +56,6 @@ export async function createVinyl(prevState: State, formData: FormData) {
   // Validate form fields using Zod
 
   const validatedFields = CreateVinyl.safeParse({
-    title: formData.get('title'),
     media_condition: formData.get('media_condition'),
     packaging_condition: formData.get('packaging_condition'),
     price: formData.get('price'),
@@ -66,20 +63,20 @@ export async function createVinyl(prevState: State, formData: FormData) {
     description: formData.get('description'),
     address: formData.get('address'),
     sku: formData.get('sku'),
-    discogs_vinyl_id: formData.get('discogs_vinyl_id')
+    discogs_vinyl_id: formData.get('discogs_vinyl_id'),
+    title: formData.get('title')
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields.',
+      message: "Missing Fields",
     };
   }
 
   // Prepare data for insertion into the database
   const {
-    title,
     media_condition,
     packaging_condition,
     price,
@@ -87,9 +84,10 @@ export async function createVinyl(prevState: State, formData: FormData) {
     description,
     address,
     sku,
-    discogs_vinyl_id
+    discogs_vinyl_id,
+    title
   } = validatedFields.data;
-  const date = new Date().toISOString().split('T')[0];
+  const [date] = new Date().toISOString().split('T');
 
   // Insert data into the database
   try {
@@ -190,5 +188,28 @@ export async function authenticate(
       return 'CredentialsSignin';
     }
     throw error;
+  }
+}
+
+export async function createDiscogsVinylData(discogsVinylID: number, discogsVinylData: any) {
+  const json_response = JSON.stringify(discogsVinylData, null, 2);
+  return discogsVinylData;
+
+  try {
+    await sql`
+      INSERT INTO discogs_data (
+        id,
+        json_response
+      )
+      VALUES (
+        ${discogsVinylID},
+        ${discogsVinylData}
+      )
+    `;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: error + 'Database Error: Failed to Create Discogs Vinyl Data.',
+    };
   }
 }

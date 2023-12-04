@@ -1,4 +1,5 @@
 'use client'
+import { createDiscogsVinylData } from '@/app/lib/actions';
 import { discogsSearchById, discogsSearchByName } from '@/app/lib/discog';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -12,7 +13,7 @@ interface Props {
 
 export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
 
-    const [results, setResults] = useState([]);
+    const [results, setResults] = useState({});
     const [coverImage, setCoverImage] = useState(
         {
             uri: "",
@@ -21,24 +22,31 @@ export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
         });
 
     const handleSearch = useDebouncedCallback((term) => {
-        (term) ?
+        (term.length > 0) ?
             discogsSearchByName(term).then((data) =>{
                 setResults(data);
-                setCoverImage('')
+                setCoverImage({
+                    uri: "",
+                    width: 0,
+                    height: 0
+                })
             })
         : setResults([])
     }, 300);
 
-    const handleVinylClick = useDebouncedCallback((id) => {
+    const handleVinylClick = useDebouncedCallback((id, item) => {
         discogsSearchById(id).then((data) => {
-            console.log(data)
             setCoverImage({
                 ... coverImage,
                 uri: data.images[0].uri,
                 width: data.images[0].width,
                 height: data.images[0].height
-            });
+            })
+            setVinyl(data)
+            console.log(data)
+            createDiscogsVinylData(data.id, data)
         })
+        setResults([])
     }, 300);
 
     return (
@@ -77,9 +85,7 @@ export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
                                 <li
                                     key={item.id}
                                     onClick={()=>{
-                                        handleVinylClick(item.id)
-                                        setVinyl(item)
-                                        setResults([])
+                                        handleVinylClick(item.id, item)
                                     }}
                                     className="grid grid-cols-10 gap-4 justify-center items-center cursor-pointer px-4 py-2 rounded-lg hover:bg-gray-50">
                                     <div className="flex justify-center items-center">

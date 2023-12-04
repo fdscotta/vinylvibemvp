@@ -6,6 +6,7 @@ import { createVinyl } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { CurrencyDollarIcon } from '@heroicons/react/24/outline';
 import RadioSelector from './radioSelector';
+import { useEffect, useState } from 'react';
 
 interface Props {
   vinyl:any
@@ -14,6 +15,13 @@ interface Props {
 export default function Form({vinyl}:Props) {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createVinyl, initialState);
+  const [discogsVinylid,setDiscogsVinylid] = useState(0);
+  const [title, setTitle] = useState('');
+
+  useEffect(() => {
+    setDiscogsVinylid(vinyl.id)
+    setTitle(vinyl.title)
+  }, [vinyl]);
 
   return (
     <form action={dispatch}>
@@ -68,7 +76,7 @@ export default function Form({vinyl}:Props) {
                     type="number"
                     placeholder="Enter the Price"
                     className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                    aria-describedby="amount-error"
+                    aria-describedby="price-error"
                   />
                   <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                 </div>
@@ -92,7 +100,7 @@ export default function Form({vinyl}:Props) {
                     type="text"
                     placeholder="Enter the Photo"
                     className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                    aria-describedby="amount-error"
+                    aria-describedby="photo-error"
                   />
                 </div>
                 <div id="status-error" aria-live="polite" aria-atomic="true">
@@ -115,7 +123,7 @@ export default function Form({vinyl}:Props) {
                     type="text"
                     placeholder="Enter the Description"
                     className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                    aria-describedby="amount-error"
+                    aria-describedby="description-error"
                   />
                 </div>
                 <div id="status-error" aria-live="polite" aria-atomic="true">
@@ -138,7 +146,7 @@ export default function Form({vinyl}:Props) {
                     type="text"
                     placeholder="Enter the Address"
                     className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                    aria-describedby="amount-error"
+                    aria-describedby="address-error"
                   />
                 </div>
                 <div id="status-error" aria-live="polite" aria-atomic="true">
@@ -161,7 +169,7 @@ export default function Form({vinyl}:Props) {
                     type="text"
                     placeholder="Enter the SKU"
                     className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                    aria-describedby="amount-error"
+                    aria-describedby="sku-error"
                   />
                 </div>
                 <div id="status-error" aria-live="polite" aria-atomic="true">
@@ -174,16 +182,24 @@ export default function Form({vinyl}:Props) {
                 </div>
               </div>
 
-{/*                 <input
-                  id="discogs_vinyl_id"
-                  name="discogs_vinyl_id"
-                  type="hidden"
-                  className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                  aria-describedby="amount-error"
-                  value={discogs_vinyl_id}
-                /> */}
+              <input
+                id="discogs_vinyl_id"
+                name="discogs_vinyl_id"
+                type="hidden"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                aria-describedby="amount-error"
+                value={discogsVinylid}
+              />
+              <input
+                id="title"
+                name="title"
+                type="hidden"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                aria-describedby="amount-error"
+                value={title}
+              />
 
-              {state.errors?.title ? (
+{/*               {state.errors?.title ? (
                 <div
                   id="amount-error"
                   aria-live="polite"
@@ -193,7 +209,7 @@ export default function Form({vinyl}:Props) {
                     <p key={error}>{error}</p>
                   ))}
                 </div>
-              ) : null}
+              ) : null} */}
 
         </div>
 
