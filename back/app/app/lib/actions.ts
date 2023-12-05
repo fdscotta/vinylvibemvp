@@ -192,8 +192,7 @@ export async function authenticate(
 }
 
 export async function createDiscogsVinylData(discogsVinylID: number, discogsVinylData: any) {
-  const json_response = JSON.stringify(discogsVinylData, null, 2);
-  return discogsVinylData;
+  const json_response = JSON.stringify(discogsVinylData).replace(/'/g, "''");
 
   try {
     await sql`
@@ -203,7 +202,7 @@ export async function createDiscogsVinylData(discogsVinylID: number, discogsViny
       )
       VALUES (
         ${discogsVinylID},
-        ${discogsVinylData}
+        ${json_response}
       )
     `;
   } catch (error) {

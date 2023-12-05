@@ -123,16 +123,16 @@ async function seedVinyls (client) {
 async function createDiscogsData (client) {
   try {
 
-    //await client.sql`DROP TABLE discog_data`;
-    // Create the "users" table if it doesn't exist
+    //await client.sql`DROP TABLE discogs_data`;
+    // Create the "discogs_data" table if it doesn't exist
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS discogs_data (
         id INT PRIMARY KEY,
-        json_response jsonb NOT NULL
+        json_response JSONB NOT NULL
       );
     `;
 
-    console.log(`Created "users" table`);
+    console.log(`Created "discogs_data" table`);
 
     return {
       createTable,
