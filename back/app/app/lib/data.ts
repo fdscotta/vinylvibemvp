@@ -88,17 +88,3 @@ export async function getUser(email: string) {
     throw new Error('Failed to fetch user.');
   }
 }
-
-export async function fetchDiscogs_data(userID : string) {
-  try {
-    const data = await sql`
-      SELECT *
-      FROM discogs_data`;
-
-    const discogs_data = data.rows;
-    return discogs_data;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch the latest fetchDiscogs_data.');
-  }
-}

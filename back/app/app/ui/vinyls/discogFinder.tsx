@@ -43,7 +43,6 @@ export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
                 height: data.images[0].height
             })
             setVinyl(data)
-            console.log(data)
             createDiscogsVinylData(data.id, data)
         })
         setResults([])

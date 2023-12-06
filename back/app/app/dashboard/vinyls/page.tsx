@@ -5,7 +5,7 @@ import { CreateVinyl } from '@/app/ui/vinyls/buttons';
 import { lusitana } from '@/app/ui/fonts';
 import { VinylsTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
-import { fetchDiscogs_data, fetchVinylsPages } from '@/app/lib/data';
+import { fetchVinylsPages } from '@/app/lib/data';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -25,9 +25,6 @@ export default async function Page({
 
   const totalPages = await fetchVinylsPages(query);
   console.log(totalPages)
-
-  const discogs_data = await fetchDiscogs_data(query);
-  console.log(discogs_data)
 
   return (
     <div className="w-full">
