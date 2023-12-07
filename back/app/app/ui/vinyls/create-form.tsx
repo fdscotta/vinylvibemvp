@@ -12,7 +12,7 @@ interface Props {
   vinyl:any
 }
 
-export default function Form({vinyl}:Props) {
+export default function FormVinyl({vinyl}:Props) {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createVinyl, initialState);
   const [ discogsVinylid, setDiscogsVinylid ] = useState(0);

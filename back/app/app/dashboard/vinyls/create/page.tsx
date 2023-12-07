@@ -1,5 +1,5 @@
 'use client';
-import Form from '@/app/ui/vinyls/create-form';
+import FormVinyl from '@/app/ui/vinyls/create-form';
 import Breadcrumbs from '@/app/ui/vinyls/breadcrumbs';
 // import { Metadata } from 'next';
 import DiscogFinder from '@/app/ui/vinyls/discogFinder';
@@ -28,7 +28,7 @@ export default function Page() {
 
       <DiscogFinder placeholder={'Enter the title'} vinyl={vinyl} setVinyl={setVinyl} />
 
-      {vinyl && <Form vinyl={vinyl} />}
+      {vinyl && <FormVinyl vinyl={vinyl} />}
     </main>
   );
 }
