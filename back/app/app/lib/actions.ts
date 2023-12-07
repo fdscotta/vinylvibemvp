@@ -5,6 +5,7 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
+import { updloadVinylPhoto } from './cloudinary';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -18,19 +19,17 @@ const FormSchema = z.object({
     .number()
     .gt(0, { message: 'Please enter an Price greater than $0.'
   }),
-  photo: z.string().url({
-    message: 'Please complete the Photo URL.',
-  }),
-  description: z.string().nonempty(
+  photo: z.any(),
+  description: z.string(
   {
-    message: 'Please complete the Description.',
-  }),
-  address: z.string().nonempty({
-    message: 'Please complete the Address.',
-  }),
-  sku: z.string().nonempty({
-    message: 'Please complete the SKU.',
-  }),
+    invalid_type_error: 'Please complete the Description.',
+  }).min(1),
+  address: z.string({
+    invalid_type_error: 'Please complete the Address.',
+  }).min(1),
+  sku: z.string({
+    invalid_type_error: 'Please complete the SKU.',
+  }).min(1),
   discogs_vinyl_id: z.coerce.number(),
   title: z.string()
 });
@@ -87,7 +86,11 @@ export async function createVinyl(prevState: State, formData: FormData) {
     discogs_vinyl_id,
     title
   } = validatedFields.data;
+
   const [date] = new Date().toISOString().split('T');
+
+  //const [ data ] = updloadVinylPhoto(photo.file, photo.filename);
+
 
   // Insert data into the database
   try {
