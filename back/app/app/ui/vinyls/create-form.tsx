@@ -34,6 +34,7 @@ export default function Form({vinyl}:Props) {
                     fieldName="Media Condition"
                     choices={["M", "NM", "VG+", "VG", "G+", "G", "F", "P"]}
                     choicesSlug={["m", "nm", "vg+", "vg", "g+", "g", "f", "p"]}
+                    choicesTooltip={["Mint", "Near Mint", "Very Good Plus", "Very Good", "Good Plus", "Good", "Fair", "Poor"]}
                     defaultValue=''
                     />
                   <div id="status-error" aria-live="polite" aria-atomic="true">
@@ -53,6 +54,7 @@ export default function Form({vinyl}:Props) {
                     fieldName="Packaging Condition"
                     choices={["M", "NM", "VG+", "VG", "G+", "G", "F", "P", "X", "NC"]}
                     choicesSlug={["m", "nm", "vg+", "vg", "g+", "g", "f", "p", "x", "nc"]}
+                    choicesTooltip={["Mint", "Near Mint", "Very Good Plus", "Very Good", "Good Plus", "Good", "Fair", "Poor", "Generic", "No Cover"]}
                     defaultValue=''
                     />
                   <div id="status-error" aria-live="polite" aria-atomic="true">
@@ -101,6 +103,9 @@ export default function Form({vinyl}:Props) {
                     placeholder="Enter the Photo"
                     className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                     aria-describedby="photo-error"
+                    onChange={(val) => {
+                      console.log(val.target.files[0])
+                    }}
                   />
                 </div>
                 <div id="status-error" aria-live="polite" aria-atomic="true">

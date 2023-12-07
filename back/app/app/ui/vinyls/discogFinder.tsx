@@ -48,11 +48,9 @@ export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
         setResults([])
     }, 300);
 
+    console.log(vinyl)
     return (
         <>
-            <label htmlFor="title" className="mb-2 block text-sm font-medium">
-            Title
-            </label>
             <div className="px-12">
                 <div className="relative">
                     <div className="relative">
@@ -104,15 +102,27 @@ export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
                     }
                 </div>
                 {coverImage.width > 0 &&
-                <div className="relative flex h-64 w-96 flex-col overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
-                    data-dialog-target="image-dialog">
+                <div className="flex h-48 w-full flex-row bg-white p-4 items-center">
                     <Image
                         src={coverImage.uri}
-                        width={coverImage.width}
-                        height={coverImage.height}
-                        className="h-full w-full object-cover object-center"
+                        width={150}
+                        height={150}
                         alt="Vinyl Selected"
                     />
+                    <div className='flex flex-col ml-5 flex-grow h-36'>
+                        {vinyl && vinyl.title && <div className=' text-lg text-gray-500'>
+                            Title: <span className='text-base'>{vinyl.title}</span>
+                        </div>}
+                        {vinyl && vinyl.artist && <div className=' text-lg text-gray-500'>
+                            Artist: <span className='text-base'>{vinyl.artist[0].name}</span>
+                        </div>}
+                        {vinyl && vinyl.genres && <div className=' text-lg text-gray-500'>
+                            Genre: <span className='text-base'>{vinyl.genres[0]}</span>
+                        </div>}
+                        {vinyl && vinyl.year && <div className=' text-lg text-gray-500'>
+                            Year: <span className='text-base'>{vinyl.year}</span>
+                        </div>}
+                    </div>
                 </div>
                 }
             </div>

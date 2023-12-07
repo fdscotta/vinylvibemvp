@@ -4,12 +4,14 @@ export default function radioSelector (
         fieldName,
         choices,
         choicesSlug,
+        choicesTooltip,
         defaultValue = ''
     }: {
         fieldId: string,
         fieldName: string,
         choices: string[],
         choicesSlug: string[],
+        choicesTooltip: string[],
         defaultValue: string
     }) {
     return (
@@ -35,8 +37,11 @@ export default function radioSelector (
                                 />
                                 <label
                                     htmlFor={fieldId + '_' + choicesSlug[index]}
-                                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
+                                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 has-tooltip"
                                 >
+                                    <span className="tooltip rounded-sm shadow-lg p-1 -mt-16 bg-gray-800 text-white px-2 ">
+                                        {choicesTooltip[index]}
+                                    </span>
                                     {choice}
                                 </label>
                             </div>
