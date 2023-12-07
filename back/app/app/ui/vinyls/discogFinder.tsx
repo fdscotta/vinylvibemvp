@@ -48,7 +48,6 @@ export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
         setResults([])
     }, 300);
 
-    console.log(vinyl)
     return (
         <>
             <div className="px-12">
@@ -94,7 +93,11 @@ export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
                                     </div>
                                     <div className="col-start-2 col-end-11 pl-8 border-l-2 border-solid border-gray">
                                         <h3 className="text-gray-900 font-medium text-md">{item.title}</h3>
-                                        <p>{item.year}</p>
+                                        <div>
+                                            {item && item.year && <div className=' text-lg text-gray-500'>
+                                                Year: <span className='text-base'>{item.year}</span>
+                                            </div>}
+                                        </div>
                                     </div>
                                 </li>
                             ))}
