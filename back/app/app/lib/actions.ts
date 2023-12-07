@@ -52,6 +52,21 @@ export type State = {
 };
 
 export async function createVinyl(prevState: State, formData: FormData) {
+
+  const file = formData.get('photo') as File;
+  const arrayBuffer = await file.arrayBuffer().then((f)=>{
+    console.log('arrayBuffer', f)
+  });
+
+  if (!file) {
+    return {
+      errors: {
+        photo: ['Please upload a photo.'],
+      },
+      message: "Missing Fields",
+    };
+  }
+
   // Validate form fields using Zod
 
   const validatedFields = CreateVinyl.safeParse({
