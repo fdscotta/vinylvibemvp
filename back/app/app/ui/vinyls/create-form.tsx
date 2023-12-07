@@ -23,6 +23,30 @@ export default function Form({vinyl}:Props) {
     setTitle(vinyl.title)
   }, [vinyl]);
 
+  const standardConditions = [
+    { name: "M", slug: "m", tooltip:"Mint", description:"Pristine, as flawless as the day it was purchased."},
+    { name: "NM", slug: "nm", tooltip:"Near Mint", description:"Exceptionally clean, only the slightest of marks"},
+    { name: "VG+", slug: "vg+", tooltip: "Very Good Plus", description:"The disc has been played, but there are no visible scratches or markings on the playing surface."},
+    { name: "VG", slug: "vg", tooltip: "Very Good", description:"The disc has been used and may show light signs of wear, but nothing that impacts playback."},
+    { name: "G+", slug: "g+", tooltip: "Good Plus", description:"Similar to Very Good, but with more visible wear on the disc. These discs will still play all the way through without any skips."},
+    { name: "G", slug: "g", tooltip: "Good", description:"The disc exhibits noticeable wear and with visible scratches on the playing surface, but plays without skipping."},
+    { name: "F", slug: "f", tooltip: "Fair", description:"The disc shows dramatic scratches and marks on playing surface that may impact playback"},
+    { name: "P", slug: "p", tooltip: "Poor", description:"The disc shows dramatic scratches and marks on playing surface that may impact playback"}
+  ]
+
+  let standardConditionsPackages = [
+    { name: "M", slug: "m", tooltip: "Mint", description: "Pristine, as flawless as the day it was purchased." },
+    { name: "NM", slug: "nm", tooltip: "Near Mint", description: "Exceptionally clean, only the slightest of marks." },
+    { name: "VG+", slug: "vg+", tooltip: "Very Good Plus", description: "More noticeable marks than Near Mint." },
+    { name: "VG", slug: "vg", tooltip: "Very Good", description: "Creasing and folding apparent." },
+    { name: "G+", slug: "g+", tooltip: "Good Plus", description: "More noticeable marks than Very Good." },
+    { name: "G", slug: "g", tooltip: "Good", description: "Worn with obvious marks, folds, creases, or tears." },
+    { name: "F", slug: "f", tooltip: "Fair", description: "Heavy wear/markings, significant creases/tears" },
+    { name: "P", slug: "p", tooltip: "Poor", description: "Mold, fading, severe tears. Falling apart." },
+    { name: "X", slug: "x", tooltip: "Generic", description: "Standard blank packaging." },
+    { name: "NC", slug: "nc", tooltip: "No Cover", description: "Tape only with no packaging." }
+  ]
+
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -32,9 +56,7 @@ export default function Form({vinyl}:Props) {
                   <RadioSelector
                     fieldId="media_condition"
                     fieldName="Media Condition"
-                    choices={["M", "NM", "VG+", "VG", "G+", "G", "F", "P"]}
-                    choicesSlug={["m", "nm", "vg+", "vg", "g+", "g", "f", "p"]}
-                    choicesTooltip={["Mint", "Near Mint", "Very Good Plus", "Very Good", "Good Plus", "Good", "Fair", "Poor"]}
+                    choices={standardConditions}
                     defaultValue=''
                     />
                   <div id="status-error" aria-live="polite" aria-atomic="true">
@@ -52,9 +74,7 @@ export default function Form({vinyl}:Props) {
                   <RadioSelector
                     fieldId="packaging_condition"
                     fieldName="Packaging Condition"
-                    choices={["M", "NM", "VG+", "VG", "G+", "G", "F", "P", "X", "NC"]}
-                    choicesSlug={["m", "nm", "vg+", "vg", "g+", "g", "f", "p", "x", "nc"]}
-                    choicesTooltip={["Mint", "Near Mint", "Very Good Plus", "Very Good", "Good Plus", "Good", "Fair", "Poor", "Generic", "No Cover"]}
+                    choices={standardConditionsPackages}
                     defaultValue=''
                     />
                   <div id="status-error" aria-live="polite" aria-atomic="true">

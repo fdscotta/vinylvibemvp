@@ -1,54 +1,58 @@
-export default function radioSelector (
-    {
-        fieldId,
-        fieldName,
-        choices,
-        choicesSlug,
-        choicesTooltip,
-        defaultValue = ''
-    }: {
-        fieldId: string,
-        fieldName: string,
-        choices: string[],
-        choicesSlug: string[],
-        choicesTooltip: string[],
-        defaultValue: string
-    }) {
+'use client'
+import { useState } from "react"
+interface Props {
+    fieldId: string,
+    fieldName: string,
+    choices: any[],
+    defaultValue: string
+}
+
+const RadioSelector = ( { fieldId, fieldName, choices, defaultValue = ''}: Props) => {
+    const [vinylCondition, setVinylCondition] = useState<string | null>(null)
+    setVinylCondition
+
     return (
         <div>
             <legend className="mb-2 block text-sm font-medium">
             Set the { fieldName }
             </legend>
+
             <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
                 <div className="flex gap-4">
                     {choices.map((choice, index) => {
-                        let defaultC: boolean;
-                        defaultC=false;
-                        if (defaultValue == choicesSlug[index]) defaultC = true;
-                        return (
-                            <div key={index} className="flex items-center">
+                        let defaultC: boolean = false
+                        if (defaultValue == choice.slug) defaultC = true;
+
+                        return <div key={index} className="flex item-center has-tooltip bg-slate-300 p-2 rounded-sm">
                                 <input
-                                    id={fieldId + '_' + choicesSlug[index]}
+                                    id={fieldId + '_' + choice.slug}
                                     name={fieldId}
                                     type="radio"
                                     defaultChecked={defaultC}
-                                    value={choicesSlug[index]}
-                                    className="text-white-600 h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 focus:ring-2"
+                                    value={choice.slug}
+                                    className="text-white-600 h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 focus:ring-2 align-middle"
+                                    onChange={(e) => {
+                                        const description = choices.find(c => c.slug === e.target.value).description
+                                        setVinylCondition(description)
+                                    }}
                                 />
                                 <label
-                                    htmlFor={fieldId + '_' + choicesSlug[index]}
-                                    className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 has-tooltip"
-                                >
+                                    htmlFor={fieldId + '_' + choice.slug}
+                                    className="ml-2 cursor-pointer px-3 text-xs font-medium text-gray-600 align-middle">
                                     <span className="tooltip rounded-sm shadow-lg p-1 -mt-16 bg-gray-800 text-white px-2 ">
-                                        {choicesTooltip[index]}
+                                        {choice.tooltip}
                                     </span>
-                                    {choice}
+                                    {choice.name}
                                 </label>
                             </div>
-                        )
                     })}
+                </div>
+                <div className="w-full text-gray-700 font-light">
+                    {vinylCondition}
                 </div>
             </div>
         </div>
     )
 }
+
+export default RadioSelector
