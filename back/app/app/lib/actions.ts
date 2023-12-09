@@ -54,9 +54,8 @@ export type State = {
 export async function createVinyl(prevState: State, formData: FormData) {
 
   const file = formData.get('photo') as File;
-  const arrayBuffer = await file.arrayBuffer().then((f)=>{
-    console.log('arrayBuffer', f)
-  });
+
+  const photo = await updloadVinylPhoto(file);
 
   if (!file) {
     return {
@@ -94,7 +93,6 @@ export async function createVinyl(prevState: State, formData: FormData) {
     media_condition,
     packaging_condition,
     price,
-    photo,
     description,
     address,
     sku,
@@ -103,9 +101,6 @@ export async function createVinyl(prevState: State, formData: FormData) {
   } = validatedFields.data;
 
   const [date] = new Date().toISOString().split('T');
-
-  //const [ data ] = updloadVinylPhoto(photo.file, photo.filename);
-
 
   // Insert data into the database
   try {
@@ -129,7 +124,7 @@ export async function createVinyl(prevState: State, formData: FormData) {
         ${media_condition},
         ${packaging_condition},
         ${price},
-        ${photo},
+        ${photo.secure_url},
         ${description},
         ${address},
         ${sku},

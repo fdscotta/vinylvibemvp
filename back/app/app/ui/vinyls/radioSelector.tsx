@@ -14,7 +14,7 @@ const RadioSelector = ( { fieldId, fieldName, choices, defaultValue = ''}: Props
     return (
         <div>
             <legend className="mb-2 block text-sm font-medium">
-            Set the { fieldName }
+            { fieldName }
             </legend>
 
             <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">

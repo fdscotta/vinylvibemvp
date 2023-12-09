@@ -1,13 +1,26 @@
 import {v2 as cloudinary} from 'cloudinary';
 
 cloudinary.config({
-  cloud_name: CLOUDINARY_NAME,
-  api_key: CLOUDINARY_KEY,
-  api_secret: CLOUDINARY_SECRET
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET
 });
 
-export async function updloadVinylPhoto(fileUrl, fileName) {
-    cloudinary.v2.uploader.upload(fileUrl,
-      { public_id: fileName },
-      function(error, result) {console.log(result); });
+export async function updloadVinylPhoto (file : File) {
+  const bytes = await file.arrayBuffer()
+  const buffer = Buffer.from(bytes);
+
+  const response = await new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream({}, (err, result) => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve(result);
+      })
+      .end(buffer)
+  });
+
+  return response;
 }

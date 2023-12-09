@@ -7,6 +7,7 @@ import { Button } from '@/app/ui/button';
 import { updateVinyl } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import RadioSelector from './radioSelector';
+import { fields } from '@/app/translations/vinyl_crud'
 
 export default function EditVinylForm({
   vinyl,
@@ -22,7 +23,7 @@ export default function EditVinylForm({
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         <div className="mb-4">
           <label htmlFor="title" className="mb-2 block text-sm font-medium">
-            Title
+            {fields.es.title.name}
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
@@ -31,38 +32,19 @@ export default function EditVinylForm({
                 name="title"
                 type="text"
                 defaultValue={vinyl.title}
-                placeholder="Enter the Title"
+                placeholder={fields.es.title.placeholder}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="amount-error"
+                disabled
               />
             </div>
           </div>
           <div className="relative mt-2 rounded-md">
             <fieldset>
               <RadioSelector
-                fieldId="album_status"
-                fieldName="Album Status"
-                choices={["It's Used","It's Brand New"]}
-                choicesSlug={["used","new"]}
-                defaultValue={vinyl.album_status}
-                />
-              <div id="status-error" aria-live="polite" aria-atomic="true">
-                {state.errors?.album_status &&
-                  state.errors.album_status.map((error: string) => (
-                    <p className="mt-2 text-sm text-red-500" key={error}>
-                      {error}
-                    </p>
-                  ))}
-              </div>
-            </fieldset>
-          </div>
-          <div className="relative mt-2 rounded-md">
-            <fieldset>
-              <RadioSelector
                 fieldId="media_condition"
-                fieldName="Media Condition"
-                choices={["M", "NM", "VG+", "VG", "G+", "G", "F", "P"]}
-                choicesSlug={["m", "nm", "vg+", "vg", "g+", "g", "f", "p"]}
+                fieldName={fields.es.standardConditions.name}
+                choices={fields.es.standardConditionsOptions}
                 defaultValue={vinyl.media_condition}
                 />
               <div id="status-error" aria-live="polite" aria-atomic="true">
@@ -79,9 +61,8 @@ export default function EditVinylForm({
             <fieldset>
               <RadioSelector
                 fieldId="packaging_condition"
-                fieldName="Packaging Condition"
-                choices={["M", "NM", "VG+", "VG", "G+", "G", "F", "P", "X", "NC"]}
-                choicesSlug={["m", "nm", "vg+", "vg", "g+", "g", "f", "p", "x", "nc"]}
+                fieldName={fields.es.standardConditionsPackages.name}
+                choices={fields.es.standardConditionsPackagesOptions}
                 defaultValue={vinyl.packaging_condition}
                 />
               <div id="status-error" aria-live="polite" aria-atomic="true">
@@ -95,51 +76,13 @@ export default function EditVinylForm({
             </fieldset>
           </div>
           <div className="relative mt-2 rounded-md">
-            <fieldset>
-              <RadioSelector
-                fieldId="is_auction"
-                fieldName="Is Auction"
-                choices={["True", "False"]}
-                choicesSlug={["true", "false"]}
-                defaultValue={vinyl.is_auction? "true":"false"}
-                />
-              <div id="status-error" aria-live="polite" aria-atomic="true">
-                {state.errors?.is_auction &&
-                  state.errors.is_auction.map((error: string) => (
-                    <p className="mt-2 text-sm text-red-500" key={error}>
-                      {error}
-                    </p>
-                  ))}
-              </div>
-            </fieldset>
-          </div>
-          <div className="relative mt-2 rounded-md">
-            <fieldset>
-              <RadioSelector
-                fieldId="accept_offers"
-                fieldName="Accept Offers"
-                choices={["True", "False"]}
-                choicesSlug={["true", "false"]}
-                defaultValue={vinyl.accept_offers? "true":"false"}
-                />
-              <div id="status-error" aria-live="polite" aria-atomic="true">
-                {state.errors?.accept_offers &&
-                  state.errors.accept_offers.map((error: string) => (
-                    <p className="mt-2 text-sm text-red-500" key={error}>
-                      {error}
-                    </p>
-                  ))}
-              </div>
-            </fieldset>
-          </div>
-          <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                id="listing_price"
-                name="listing_price"
+                id="price"
+                name="price"
                 type="number"
-                placeholder="Enter the Listing Price"
-                defaultValue={vinyl.listing_price}
+                placeholder={fields.es.price.placeholder}
+                defaultValue={vinyl.price}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="amount-error"
               />
@@ -152,7 +95,7 @@ export default function EditVinylForm({
                 id="photo"
                 name="photo"
                 type="text"
-                placeholder="Enter the Photo"
+                placeholder={fields.es.photo.placeholder}
                 defaultValue={vinyl.photo}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="amount-error"
@@ -165,7 +108,7 @@ export default function EditVinylForm({
                 id="description"
                 name="description"
                 type="text"
-                placeholder="Enter the Description"
+                placeholder={fields.es.description.placeholder}
                 defaultValue={vinyl.description}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="amount-error"
@@ -175,11 +118,11 @@ export default function EditVinylForm({
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                id="adv_store_location"
-                name="adv_store_location"
+                id="address"
+                name="address"
                 type="text"
-                placeholder="Enter the Store Location"
-                defaultValue={vinyl.adv_store_location}
+                placeholder={fields.es.address.placeholder}
+                defaultValue={vinyl.address}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="amount-error"
               />
@@ -188,42 +131,16 @@ export default function EditVinylForm({
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                id="adv_cost"
-                name="adv_cost"
-                type="number"
-                placeholder="Enter the Cost"
-                defaultValue={vinyl.adv_cost}
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                aria-describedby="amount-error"
-              />
-              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-            </div>
-          </div>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="adv_sku"
-                name="adv_sku"
+                id="sku"
+                name="sku"
                 type="text"
-                placeholder="Enter the SKU"
-                defaultValue={vinyl.adv_sku}
+                placeholder={fields.es.sku.placeholder}
+                defaultValue={vinyl.sku}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="amount-error"
               />
             </div>
           </div>
-
-          {state.errors?.title ? (
-            <div
-              id="amount-error"
-              aria-live="polite"
-              className="mt-2 text-sm text-red-500"
-            >
-              {state.errors.title.map((error: string) => (
-                <p key={error}>{error}</p>
-              ))}
-            </div>
-          ) : null}
         </div>
 
         {state.message ? (
