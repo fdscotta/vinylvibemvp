@@ -61,7 +61,7 @@
       standardConditions: {
         name: "Set the Media Condition"
       },
-      standardConditions: [
+      standardConditionsOptions: [
         { name: "M", slug: "m", tooltip: "Mint", description: "Pristine, as flawless as the day it was purchased." },
         { name: "NM", slug: "nm", tooltip: "Near Mint", description: "Exceptionally clean, only the slightest of marks" },
         { name: "VG+", slug: "vg+", tooltip: "Very Good Plus", description: "The disc has been played, but there are no visible scratches or markings on the playing surface." },
@@ -74,7 +74,7 @@
       standardConditionsPackages: {
         name: "Set the Package Condition"
       },
-      standardConditionsPackages: [
+      standardConditionsPackagesOptions: [
         { name: "M", slug: "m", tooltip: "Mint", description: "Pristine, as flawless as the day it was purchased." },
         { name: "NM", slug: "nm", tooltip: "Near Mint", description: "Exceptionally clean, only the slightest of marks." },
         { name: "VG+", slug: "vg+", tooltip: "Very Good Plus", description: "More noticeable marks than Near Mint." },
