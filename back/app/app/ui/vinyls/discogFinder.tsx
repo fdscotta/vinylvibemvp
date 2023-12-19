@@ -13,7 +13,7 @@ interface Props {
 
 export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
 
-    const [results, setResults] = useState({});
+    const [results, setResults] = useState<any>({});
     const [coverImage, setCoverImage] = useState(
         {
             uri: "",
@@ -66,7 +66,8 @@ export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
                         className="pl-16 pr-4 py-4 rounded-md shadow-md bg-white border-0 w-full outline-none"
                         aria-describedby="amount-error"
                         onKeyUp={(e) => {
-                            handleSearch(e.target.value);
+                            const { target } = e
+                            if (target) handleSearch((target as HTMLInputElement).value);
                         }}
                         onChange={(e)=>{
                             setVinyl(null)
@@ -77,7 +78,7 @@ export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
 
                     {results.length > 0 &&
                         <ul className="rounded-md shadow-md bg-white absolute left-0 right-0 -bottom-18 mt-3 p-3">
-                            {results?.map((item) => (
+                            {results?.map((item : any) => (
                                 <li
                                     key={item.id}
                                     onClick={()=>{
@@ -85,9 +86,10 @@ export default function DiscogFinder({ placeholder, vinyl, setVinyl }: Props) {
                                     }}
                                     className="grid grid-cols-10 gap-4 justify-center items-center cursor-pointer px-4 py-2 rounded-lg hover:bg-gray-50">
                                     <div className="flex justify-center items-center">
-                                        <img
+                                        <Image
                                          src={item.cover_image}
-                                         className="h-16 w-16"
+                                         width={64}
+                                         height={64}
                                          alt={item.title}
                                          />
                                     </div>
