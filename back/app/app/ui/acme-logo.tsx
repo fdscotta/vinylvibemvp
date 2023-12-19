@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "@/vinyl-logo.png";
+import logo from "@/app/vinyl-logo.png";
 
 export default function AcmeLogo() {
   return (
