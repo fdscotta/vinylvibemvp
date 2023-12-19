@@ -24,6 +24,7 @@ export default async function Page({
   const currentPage = Number(searchParams?.page) || 1;
 
   const totalPages = await fetchVinylsPages(query);
+  console.log(totalPages)
 
   return (
     <div className="w-full">

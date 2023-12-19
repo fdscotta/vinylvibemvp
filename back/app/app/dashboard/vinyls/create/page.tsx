@@ -1,12 +1,17 @@
-import Form from '@/app/ui/vinyls/create-form';
+'use client';
+import FormVinyl from '@/app/ui/vinyls/create-form';
 import Breadcrumbs from '@/app/ui/vinyls/breadcrumbs';
-import { Metadata } from 'next';
+// import { Metadata } from 'next';
+import DiscogFinder from '@/app/ui/vinyls/discogFinder';
+import { useState } from 'react';
 
-export const metadata: Metadata = {
-  title: 'Create Vinyl',
-};
+// export const metadata: Metadata = {
+//   title: 'Create Vinyl',
+// };
 
-export default async function Page() {
+export default function Page() {
+
+  const [vinyl, setVinyl] = useState(null);
 
   return (
     <main>
@@ -20,7 +25,10 @@ export default async function Page() {
           },
         ]}
       />
-      <Form />
+
+      <DiscogFinder placeholder={'Enter the title'} vinyl={vinyl} setVinyl={setVinyl} />
+
+      {vinyl && <FormVinyl vinyl={vinyl} />}
     </main>
   );
 }

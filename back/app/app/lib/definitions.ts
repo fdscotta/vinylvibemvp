@@ -12,17 +12,13 @@ export type User = {
 export type Vinyls = {
     id: string,
     title: string,
-    album_status: string,
     media_condition: 'm' | 'nm' | 'vg+' | 'vg' | 'g+' | 'g' | 'f' | 'p',
     packaging_condition: 'm' | 'nm' | 'vg+' | 'vg' | 'g+' | 'g' | 'f' | 'p' | 'x' | 'nc' ,
-    is_auction: string,
-    accept_offers: string,
-    listing_price: number,
+    price: number,
     photo: string,
     description: string,
-    adv_store_location: string,
-    adv_cost: number,
-    adv_sku: string,
+    address: string,
+    sku: string,
     user_id: string,
     status: 'publish' | 'draft';
     publish_date: string;
@@ -31,17 +27,13 @@ export type Vinyls = {
 export type LatestVinyls = {
     id: string,
     title: string,
-    album_status: string,
     media_condition: 'm' | 'nm' | 'vg+' | 'vg' | 'g+' | 'g' | 'f' | 'p',
     packaging_condition: 'm' | 'nm' | 'vg+' | 'vg' | 'g+' | 'g' | 'f' | 'p' | 'x' | 'nc' ,
-    is_auction: string,
-    accept_offers: string,
-    listing_price: number,
+    price: number,
     photo: string,
     description: string,
-    adv_store_location: string,
-    adv_cost: number,
-    adv_sku: string,
+    address: string,
+    sku: string,
     user_id: string,
     status: 'publish' | 'draft';
     publish_date: string;
@@ -50,17 +42,13 @@ export type LatestVinyls = {
 export type VinylsTable = {
     id: string,
     title: string,
-    album_status: string,
     media_condition: 'm' | 'nm' | 'vg+' | 'vg' | 'g+' | 'g' | 'f' | 'p',
     packaging_condition: 'm' | 'nm' | 'vg+' | 'vg' | 'g+' | 'g' | 'f' | 'p' | 'x' | 'nc' ,
-    is_auction: string,
-    accept_offers: string,
-    listing_price: number,
+    price: number,
     photo: string,
     description: string,
-    adv_store_location: string,
-    adv_cost: number,
-    adv_sku: string,
+    address: string,
+    sku: string,
     user_id: string,
     status: 'publish' | 'draft';
     publish_date: string;
@@ -69,17 +57,13 @@ export type VinylsTable = {
 export type VinylsForm = {
     id: string,
     title: string,
-    album_status: string,
     media_condition: 'm' | 'nm' | 'vg+' | 'vg' | 'g+' | 'g' | 'f' | 'p',
     packaging_condition: 'm' | 'nm' | 'vg+' | 'vg' | 'g+' | 'g' | 'f' | 'p' | 'x' | 'nc' ,
-    is_auction: string,
-    accept_offers: string,
-    listing_price: number,
+    price: number,
     photo: string,
     description: string,
-    adv_store_location: string,
-    adv_cost: number,
-    adv_sku: string,
+    address: string,
+    sku: string,
     user_id: string,
     status: 'publish' | 'draft';
     publish_date: string;

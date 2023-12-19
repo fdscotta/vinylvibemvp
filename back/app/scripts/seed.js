@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 
 async function seedUsers (client) {
   try {
-    await client.sql`DROP TABLE users`;
+    // await client.sql`DROP TABLE users`;
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
     // Create the "users" table if it doesn't exist
     const createTable = await client.sql`
@@ -48,27 +48,24 @@ async function seedUsers (client) {
 
 async function seedVinyls (client) {
   try {
-    await client.sql`DROP TABLE vinyls`;
+    //await client.sql`DROP TABLE vinyls`;
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
     // Create the "vinyls" table if it doesn't exist
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS vinyls (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         title TEXT NOT NULL,
-        album_status VARCHAR(255) NOT NULL,
         media_condition VARCHAR(255) NOT NULL,
         packaging_condition VARCHAR(255) NOT NULL,
-        is_auction BOOLEAN NOT NULL,
-        accept_offers BOOLEAN NOT NULL,
-        listing_price INT NOT NULL,
+        price INT NOT NULL,
         photo VARCHAR(255) NOT NULL,
         description VARCHAR(255) NOT NULL,
-        adv_store_location VARCHAR(255) NOT NULL,
-        adv_cost INT NOT NULL,
-        adv_sku VARCHAR(255) NOT NULL,
+        address VARCHAR(255) NOT NULL,
+        sku VARCHAR(255) NOT NULL,
         user_id UUID NOT NULL,
         status VARCHAR(255) NOT NULL,
-        publish_date DATE NOT NULL
+        publish_date DATE NOT NULL,
+        discogs_data_id INT not NUll
       );
     `;
 
@@ -80,37 +77,31 @@ async function seedVinyls (client) {
         return client.sql`
         INSERT INTO vinyls (
           title,
-          album_status,
           media_condition,
           packaging_condition,
-          is_auction,
-          accept_offers,
-          listing_price,
+          price,
           photo,
           description,
-          adv_store_location,
-          adv_cost,
-          adv_sku,
+          address,
+          sku,
           user_id,
           status,
-          publish_date
+          publish_date,
+          discogs_data_id
         )
         VALUES (
           ${vinyl.title},
-          ${vinyl.album_status},
           ${vinyl.media_condition},
           ${vinyl.packaging_condition},
-          ${vinyl.is_auction},
-          ${vinyl.accept_offers},
-          ${vinyl.listing_price},
+          ${vinyl.price},
           ${vinyl.photo},
           ${vinyl.description},
-          ${vinyl.adv_store_location},
-          ${vinyl.adv_cost},
-          ${vinyl.adv_sku},
+          ${vinyl.address},
+          ${vinyl.sku},
           ${vinyl.user_id},
           ${vinyl.status},
-          ${vinyl.publish_date}
+          ${vinyl.publish_date},
+          ${vinyl.discogs_data_id}
         )
         ON CONFLICT (id) DO NOTHING;
       `;
@@ -129,11 +120,35 @@ async function seedVinyls (client) {
   }
 }
 
+async function createDiscogsData (client) {
+  try {
+
+    //await client.sql`DROP TABLE discogs_data`;
+    // Create the "discogs_data" table if it doesn't exist
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS discogs_data (
+        id INT PRIMARY KEY,
+        json_response JSONB NOT NULL
+      );
+    `;
+
+    console.log(`Created "discogs_data" table`);
+
+    return {
+      createTable,
+    };
+  } catch (error) {
+    console.error('Error seeding discogs_data:', error);
+    throw error;
+  }
+}
+
 async function main () {
   const client = await db.connect();
 
   await seedVinyls(client);
   await seedUsers(client);
+  await createDiscogsData(client);
 
   await client.end();
 }
