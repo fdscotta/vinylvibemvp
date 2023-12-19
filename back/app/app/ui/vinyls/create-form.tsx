@@ -18,7 +18,7 @@ export default function FormVinyl({vinyl}:Props) {
   const [ state, dispatch ] = useFormState(createVinyl, initialState);
   const [ discogsVinylid, setDiscogsVinylid ] = useState(0);
   const [ title, setTitle ] = useState('');
-  const [ file, setFile ] = useState(null);
+  const [ file, setFile ] = useState<File>();
 
   useEffect(() => {
     setDiscogsVinylid(vinyl.id)
@@ -102,7 +102,10 @@ export default function FormVinyl({vinyl}:Props) {
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="photo-error"
                 onChange={(e) => {
-                  setFile(e.target.files[0])
+                  const selectedFile = e.target.files ? e.target.files[0] : null
+                  if (selectedFile) {
+                    setFile(selectedFile)
+                  }
                 }}
               />
             </div>
