@@ -10,7 +10,7 @@ export async function updloadVinylPhoto (file : File) {
   const bytes = await file.arrayBuffer()
   const buffer = Buffer.from(bytes);
 
-  const response = await new Promise((resolve, reject) => {
+  const response : any = await new Promise((resolve, reject) => {
     cloudinary.uploader
       .upload_stream({}, (err, result) => {
         if (err) {

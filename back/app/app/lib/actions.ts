@@ -124,7 +124,7 @@ export async function createVinyl(prevState: State, formData: FormData) {
         ${media_condition},
         ${packaging_condition},
         ${price},
-        ${photo.secure_url},
+        ${photo?.secure_url},
         ${description},
         ${address},
         ${sku},
