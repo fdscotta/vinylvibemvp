@@ -35,7 +35,7 @@ export const updateImageCloud = async (file : File) => {
       });
     };
 
-    const result = await uploadToCloudinary();
+    const result : any = await uploadToCloudinary();
 
     const imageUrl = result.secure_url;
 
