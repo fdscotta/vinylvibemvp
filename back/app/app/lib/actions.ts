@@ -55,11 +55,7 @@ export async function createVinyl(prevState: State, formData: FormData) {
 
   const file = formData.get('photo') as File;
 
-  try {
-    const photo = await updloadVinylPhoto(file);
-  } catch (error) {
-    console.log(JSON.stringify(error))
-  }
+  //const photo = await updloadVinylPhoto(file);
 
   if (!file) {
     return {
@@ -128,7 +124,7 @@ export async function createVinyl(prevState: State, formData: FormData) {
         ${media_condition},
         ${packaging_condition},
         ${price},
-        ${photo?.secure_url},
+        '',
         ${description},
         ${address},
         ${sku},
