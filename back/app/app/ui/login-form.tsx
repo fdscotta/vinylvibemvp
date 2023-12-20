@@ -13,7 +13,6 @@ import { useFormState, useFormStatus } from 'react-dom';
 
 export default function LoginForm() {
   const [code, action] = useFormState(authenticate, undefined);
-  const { pending } = useFormStatus();
 
   return (
     <form action={action} className="space-y-3">

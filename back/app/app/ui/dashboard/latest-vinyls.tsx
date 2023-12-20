@@ -5,9 +5,14 @@ import { lusitana } from '@/app/ui/fonts';
 import { fetchLatestVinyls } from '@/app/lib/data';
 import VinylStatus from '../vinyls/status';
 import { formatDateToLocal } from '@/app/lib/utils';
+import { auth, getUser } from '@/auth';
 
 export default async function LatestVinyls() {
-  const latestVinyls = await fetchLatestVinyls('410544b2-4001-4271-9855-fec4b6a6442a');
+
+  const session = await auth()
+  const sessionEmail = session?.user?.email || ''
+  const user = await getUser(sessionEmail)
+  const latestVinyls = await fetchLatestVinyls(user?.id!);
 
   return (
     <div className="flex w-full flex-col md:col-span-4 lg:col-span-4">
