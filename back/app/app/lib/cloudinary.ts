@@ -14,6 +14,7 @@ export async function updloadVinylPhoto (file : File) {
   const response : any = await new Promise((resolve, reject) => {
     cloudinary.uploader
       .upload_stream({}, (err, result) => {
+        console.log(JSON.stringify(err))
         if (err) {
           reject(err);
         }

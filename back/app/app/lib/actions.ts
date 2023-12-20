@@ -55,8 +55,6 @@ export async function createVinyl(prevState: State, formData: FormData) {
 
   const file = formData.get('photo') as File;
 
-  const photo = await updloadVinylPhoto(file);
-
   if (!file) {
     return {
       errors: {
@@ -65,6 +63,8 @@ export async function createVinyl(prevState: State, formData: FormData) {
       message: "Missing Fields",
     };
   }
+
+  const photo = await updloadVinylPhoto(file);
 
   // Validate form fields using Zod
 
