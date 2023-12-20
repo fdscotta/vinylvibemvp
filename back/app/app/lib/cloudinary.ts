@@ -1,28 +1,48 @@
 'use server'
 import {v2 as cloudinary} from 'cloudinary';
+import { NextResponse } from "next/server";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET
+  api_secret: process.env.CLOUDINARY_SECRET,
+  secure: true
 });
 
-export async function updloadVinylPhoto (file : File) {
-  const bytes = await file.arrayBuffer()
-  const buffer = Buffer.from(bytes);
+export const updateImageCloud = async (file : File) => {
 
-  const response : any = await new Promise((resolve, reject) => {
-    cloudinary.uploader
-      .upload_stream({}, (err, result) => {
-        console.log(JSON.stringify(err))
-        if (err) {
-          reject(err);
-        }
+  const fileBuffer = await file.arrayBuffer();
 
-        resolve(result);
-      })
-      .end(buffer)
-  });
+  var mime = file.type;
+  var encoding = 'base64';
+  var base64Data = Buffer.from(fileBuffer).toString('base64');
+  var fileUri = 'data:' + mime + ';' + encoding + ',' + base64Data;
 
-  return response;
-}
+  try {
+
+    const uploadToCloudinary = () => {
+      return new Promise((resolve, reject) => {
+
+          var result = cloudinary.uploader.upload(fileUri, {
+            invalidate: true
+          })
+            .then((result) => {
+              resolve(result);
+            })
+            .catch((error) => {
+              reject(error);
+            });
+      });
+    };
+
+    const result = await uploadToCloudinary();
+
+    const imageUrl = result.secure_url;
+
+    return imageUrl
+
+  } catch (error) {
+    console.log("server err", error);
+    return NextResponse.json({ err: "Internal Server Error" }, { status: 500 });
+  }
+};

@@ -5,7 +5,7 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
-import { updloadVinylPhoto } from './cloudinary';
+import { updateImageCloud } from './cloudinary';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -64,7 +64,7 @@ export async function createVinyl(prevState: State, formData: FormData) {
     };
   }
 
-  const photo = await updloadVinylPhoto(file);
+  const imagePosted = await updateImageCloud(file);
 
   // Validate form fields using Zod
 
@@ -124,7 +124,7 @@ export async function createVinyl(prevState: State, formData: FormData) {
         ${media_condition},
         ${packaging_condition},
         ${price},
-        ${photo?.secure_url},
+        ${imagePosted},
         ${description},
         ${address},
         ${sku},
