@@ -35,7 +35,7 @@ const FormSchema = z.object({
 });
 
 const CreateVinyl = FormSchema.omit({ id: true});
-const UpdateVinyl = FormSchema.omit({ date: true, id: true });
+const UpdateVinyl = FormSchema.omit({ discogs_vinyl_id: true, title: true, date: true, id: true });
 
 // This is temporary
 export type State = {
@@ -55,7 +55,7 @@ export async function createVinyl(prevState: State, formData: FormData) {
 
   const file = formData.get('photo') as File;
 
-  if (!file) {
+ if (Object.keys(file).length === 0) {
     return {
       errors: {
         photo: ['Please upload a photo.'],
@@ -151,10 +151,29 @@ export async function updateVinyl(
   prevState: State,
   formData: FormData,
 ) {
+  const file = formData.get('photo') as File;
+  let imagePosted = null
+  let insertImageQry = ''
+
+  if (file.size > 0) {
+    imagePosted = await updateImageCloud(file);
+  }
+
+  // Validate form fields using Zod
+
   const validatedFields = UpdateVinyl.safeParse({
-    title: formData.get('title'),
+    media_condition: formData.get('media_condition'),
+    packaging_condition: formData.get('packaging_condition'),
+    price: formData.get('price'),
+    photo: formData.get('photo'),
+    description: formData.get('description'),
+    address: formData.get('address'),
+    sku: formData.get('sku'),
+    discogs_vinyl_id: formData.get('discogs_vinyl_id'),
+    title: formData.get('title')
   });
 
+  // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
@@ -162,16 +181,29 @@ export async function updateVinyl(
     };
   }
 
-  const { title } = validatedFields.data;
+  const {
+    media_condition,
+    packaging_condition,
+    price,
+    description,
+    address,
+    sku
+  } = validatedFields.data;
 
   try {
     await sql`
-      UPDATE vinyls
-      SET title = ${title}
+      UPDATE vinyls SET
+      media_condition = ${media_condition},
+      packaging_condition = ${packaging_condition},
+      price = ${price},
+      photo = NULLIF(${imagePosted}, photo)::text,
+      description = ${description},
+      address = ${address},
+      sku = ${sku}
       WHERE id = ${id}
     `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Vinyl.' };
+    return { message: JSON.stringify(error) };
   }
 
   revalidatePath('/dashboard/vinyls');

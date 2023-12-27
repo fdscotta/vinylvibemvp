@@ -14,13 +14,13 @@ export default function VinylStatus({ status }: { status: string }) {
     >
       {status === 'draft' ? (
         <>
-          Pending
+          Published
           <ClockIcon className="ml-1 w-4 text-gray-500" />
         </>
       ) : null}
       {status === 'publish' ? (
         <>
-          Paid
+          Sold
           <CheckIcon className="ml-1 w-4 text-white" />
         </>
       ) : null}

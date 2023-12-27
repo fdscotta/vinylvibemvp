@@ -12,11 +12,9 @@ export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
   const [vinyl] = await Promise.all([
     fetchVinylById(id),
-  ]);
-
-  if (!vinyl) {
-    notFound();
-  }
+  ]).catch(() => {
+    notFound()
+  });
 
   return (
     <main>

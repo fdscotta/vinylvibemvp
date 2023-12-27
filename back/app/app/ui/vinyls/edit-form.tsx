@@ -8,6 +8,8 @@ import { updateVinyl } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import RadioSelector from './radioSelector';
 import { fields } from '@/app/translations/vinyl_crud'
+import Image from 'next/image';
+import { useState } from 'react';
 
 export default function EditVinylForm({
   vinyl,
@@ -76,6 +78,9 @@ export default function EditVinylForm({
             </fieldset>
           </div>
           <div className="relative mt-2 rounded-md">
+            <legend className="mb-2 block text-sm font-medium">
+              {fields.es.price.name}
+            </legend>
             <div className="relative">
               <input
                 id="price"
@@ -88,21 +93,52 @@ export default function EditVinylForm({
               />
               <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
-          </div>
-          <div className="relative mt-2 rounded-md">
-            <div className="relative">
-              <input
-                id="photo"
-                name="photo"
-                type="text"
-                placeholder={fields.es.photo.placeholder}
-                defaultValue={vinyl.photo}
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                aria-describedby="amount-error"
-              />
+            <div id="status-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.price &&
+                state.errors.price.map((error: string) => (
+                  <p className="mt-2 text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
             </div>
           </div>
           <div className="relative mt-2 rounded-md">
+            <legend className="mb-2 block text-sm font-medium">
+              {fields.es.photo.name}
+            </legend>
+            <div className="relative">
+              {vinyl.photo &&
+                <div className="flex h-48 w-full flex-row bg-white p-4 items-center">
+                  <Image
+                    src={vinyl.photo}
+                    width={150}
+                    height={150}
+                    alt={vinyl.title}
+                  />
+                </div>
+              }
+              <input
+                id="photo"
+                name="photo"
+                type="file"
+                placeholder={fields.es.photo.placeholder}
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                aria-describedby="photo-error"
+              />
+            </div>
+            <div id="status-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.photo &&
+                state.errors.photo.map((error: string) => (
+                  <p className="mt-2 text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
+          </div>
+          <div className="relative mt-2 rounded-md">
+            <legend className="mb-2 block text-sm font-medium">
+              {fields.es.description.name}
+            </legend>
             <div className="relative">
               <input
                 id="description"
@@ -114,8 +150,19 @@ export default function EditVinylForm({
                 aria-describedby="amount-error"
               />
             </div>
+            <div id="status-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.description &&
+                state.errors.description.map((error: string) => (
+                  <p className="mt-2 text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
           </div>
           <div className="relative mt-2 rounded-md">
+            <legend className="mb-2 block text-sm font-medium">
+              {fields.es.address.name}
+            </legend>
             <div className="relative">
               <input
                 id="address"
@@ -127,8 +174,19 @@ export default function EditVinylForm({
                 aria-describedby="amount-error"
               />
             </div>
+            <div id="status-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.address &&
+                state.errors.address.map((error: string) => (
+                  <p className="mt-2 text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
+            </div>
           </div>
           <div className="relative mt-2 rounded-md">
+            <legend className="mb-2 block text-sm font-medium">
+              {fields.es.sku.name}
+            </legend>
             <div className="relative">
               <input
                 id="sku"
@@ -139,6 +197,14 @@ export default function EditVinylForm({
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="amount-error"
               />
+            </div>
+            <div id="status-error" aria-live="polite" aria-atomic="true">
+              {state.errors?.sku &&
+                state.errors.sku.map((error: string) => (
+                  <p className="mt-2 text-sm text-red-500" key={error}>
+                    {error}
+                  </p>
+                ))}
             </div>
           </div>
         </div>
